@@ -18,7 +18,26 @@ var http = require('http');
     password : config.MYSQL_PASSWORD
 });**/
 
-exports.index = function(req, res){
-
+exports.index = function(req, res){ 
     res.send("HEY!");
+};
+
+exports.login = function(req, res){
+
+    // Get query from request
+    var url_parts = url.parse(req.url, true);
+    // Get request parameters
+    var email = sanitizer.sanitize(url_parts.query.email);
+    var password = sanitizer.sanitize(url_parts.query.password);
+
+    if(!email){
+        res.json({ "message": "Email cannot be empty!", "status": "error"}, 500);
+    }
+    if(!password){
+        res.json({ "message": "Password cannot be empty!", "status": "error"}, 500);
+    }
+
+    req.session.email = email;
+
+    res.redirect('/dashboard');
 };
