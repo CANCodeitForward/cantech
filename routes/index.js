@@ -24,11 +24,10 @@ exports.index = function(req, res){
 
 exports.login = function(req, res){
 
-    // Get query from request
-    var url_parts = url.parse(req.url, true);
-    // Get request parameters
-    var email = sanitizer.sanitize(url_parts.query.email);
-    var password = sanitizer.sanitize(url_parts.query.password);
+    var email = sanitizer.sanitize(req.body.email);
+    console.log('email: ' + email);
+    var password = sanitizer.sanitize(req.body.password);
+    console.log('password: ' + password);
 
     if(!email){
         res.json({ "message": "Email cannot be empty!", "status": "error"}, 500);
@@ -36,6 +35,8 @@ exports.login = function(req, res){
     if(!password){
         res.json({ "message": "Password cannot be empty!", "status": "error"}, 500);
     }
+
+    // TODO: Authenticate with database
 
     req.session.email = email;
 
