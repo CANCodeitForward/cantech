@@ -3,11 +3,10 @@
  **/
  
 var express = require('express');
-// var routes = require('./routes/index');
+var routes = require('./routes/index');
 var http = require('http');
 var https = require('https');
 var path = require('path');
-var config = require('./config.json');
 var fs = require("fs");
 var app = express(); 
 
@@ -42,7 +41,7 @@ if ('development' == app.get('env')) {
 }  
 
 // Index Page
-// app.get('/', routes.index);
+app.get('/', routes.index);
 
 // Create server
 http.createServer(app).listen(3000, function(){
