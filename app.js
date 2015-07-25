@@ -42,7 +42,8 @@ if ('development' == app.get('env')) {
 
 // Index Page
 app.get('/', routes.index);
-app.post('/login', routes.login);
+app.get('/login', routes.login);
+app.post('/login_user', routes.login_user);
 
 // Create server
 http.createServer(app).listen(3000, function(){

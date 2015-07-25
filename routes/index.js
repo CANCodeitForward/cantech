@@ -22,7 +22,11 @@ exports.index = function(req, res){
     res.send("HEY!");
 };
 
-exports.login = function(req, res){
+exports.login = function(req, res){ 
+    res.render("login");
+};
+
+exports.login_user = function(req, res){
 
     var email = sanitizer.sanitize(req.body.email);
     console.log('email: ' + email);
