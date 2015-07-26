@@ -6607,9 +6607,57 @@ th.hide-for-touch {
 @media not print {
   .show-for-print {
     display: none !important; } }
+html, body {
+  height: 100%; }
+
 body {
-  font-size: 12px;
-  font-family: serif;
-  color: black; }
+  font-size: 16px;
+  font-family: Roboto, sans-serif; }
+
+.container {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto;
+  margin-bottom: -80px; }
+
+.row.full-width {
+  max-width: 100% !important; }
+  .row.full-width .row {
+    margin: 0 auto;
+    max-width: 62.5rem; }
+
+.sidebar .coach-avatar {
+  clear: both;
+  border: 1px solid #919191;
+  border-top: none;
+  border-left: none; }
+  .sidebar .coach-avatar .-logo {
+    float: left; }
+  .sidebar .coach-avatar .-title {
+    color: #003D7D;
+    font-weight: bold; }
+  .sidebar .coach-avatar .-log-out {
+    color: #008752; }
+.sidebar .session-listing {
+  border: 1px solid #919191;
+  border-top: none;
+  border-left: none; }
+  .sidebar .session-listing .-title {
+    color: #003D7D;
+    font-weight: bold; }
+  .sidebar .session-listing .-dates {
+    color: #919191; }
+
+.main-display {
+  text-align: center; }
+  .main-display .can-logo-splash {
+    margin: 200px auto 0; }
+
+.footer, .footer-push {
+  height: 80px; }
+
+.nav-footer {
+  text-align: center; }
 
 /*# sourceMappingURL=main.css.map */

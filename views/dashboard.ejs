@@ -5,10 +5,60 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<div class="row">
-    <!-- read this for the grid: http://foundation.zurb.com/docs/components/grid.html -->
-    <div class="large-4 columns">...</div>
-    <div class="large-8 columns">...</div>
+<div class="container">
+    <div class="row full-width">
+        <!-- read this for the grid: http://foundation.zurb.com/docs/components/grid.html -->
+        <div class="large-4 columns sidebar">
+            <div class="row coach-avatar">
+                <img src="/images/coach-avatar.png" class="-logo">
+
+                <div class="-title-container">
+                    <div class="-title">Awesome Coach's Sessions</div>
+                    <div class="-log-out">Log Out</div>
+                </div>
+            </div>
+            <div class="row session-listing">
+                <div class="-title">I CAN Swim (ICS-101)</div>
+                <div class="-dates">April 11, 2015 - May 30, 2015<br>Saturday, 10:00 - 13:30</div>
+                <div class="-current-status x-today">TODAY</div>
+            </div>
+            <div class="row session-listing">
+                <div class="-title">I CAN Swim (ICS-101)</div>
+                <div class="-dates">April 11, 2015 - May 30, 2015<br>Saturday, 10:00 - 13:30</div>
+                <div class="-current-status">Next class in 2 days</div>
+            </div>
+            <div class="row session-listing">
+                <div class="-title">I CAN Swim (ICS-101)</div>
+                <div class="-dates">April 11, 2015 - May 30, 2015<br>Saturday, 10:00 - 13:30</div>
+                <div class="-current-status x-today">Next class in 6 days</div>
+            </div>
+        </div>
+        <div class="large-8 columns main">
+            <div class="row main-display">
+                <img src="/images/can-logo.png" class="can-logo-splash">
+            </div>
+        </div>
+    </div>
+    <!-- footer-push is used for the sticky footer -->
+    <div class="footer-push"></div>
+</div>
+
+<div class="footer">
+    <div class="row">
+        <div class="columns large-4"></div>
+        <div class="columns large-8 nav-footer">
+            <div class="columns large-4">
+                <img src="/images/workers.png">
+            </div>
+            <div class="columns large-4">
+                <img src="/images/participants.png">
+            </div>
+            <div class="columns large-4">
+                <!-- TODO: hack for width here, need real image -->
+                <img src="/images/reports.png" width="80px">
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
