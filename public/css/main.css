@@ -6648,6 +6648,12 @@ body {
     font-weight: bold; }
   .sidebar .session-listing .-dates {
     color: #919191; }
+  .sidebar .session-listing .-classes-dates {
+    font-size: 14px; }
+  .sidebar .session-listing .-classes {
+    display: none; }
+    .sidebar .session-listing .-classes.x-show {
+      display: block; }
 
 .main-display {
   text-align: center; }
