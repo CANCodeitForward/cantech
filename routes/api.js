@@ -67,10 +67,10 @@ exports.class_worker_registrations = function(req, res){
   var query = connection.query(sql, function(err, result) {   
     if (err) {
       console.log(err);
-      res.json({"message": "Something went wrong!", "results": null}, 500); 
+      res.json({"message": "Something went wrong!", "results": null}, 500);
     } else {
       if (result.length === 0) {
-        res.json({"message": "No registrations found", "results": null}, 404); 
+        res.json({"message": "No registrations found", "results": null}, 404);
       } else {
         console.log(result);
         // This SQL query returns all the workers who have signed in and signed out
@@ -78,8 +78,17 @@ exports.class_worker_registrations = function(req, res){
         var query2 = connection.query(sql, function(err, result2) {
           // We manually stitch the two results together because the two existing SQL queries are complicated enough
           result.forEach(function (currentValue) {
-            currentValue.attendance = result2.filter(function matchingWorkers(filterValue) {
-             return filterValue.worker_id == currentValue.worker_id;
+            var attendanceRecords = result2.filter(function matchingWorkers(filterValue) {
+              return filterValue.worker_id == currentValue.worker_id;
+            });
+
+            currentValue.attendance = {};
+            attendanceRecords.forEach(function(record) {
+              if (record.type == 0) {
+                currentValue.attendance.signout = record;
+              } else {
+                currentValue.attendance.signin = record;
+              }
             });
           });
           // Return to view

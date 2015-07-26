@@ -17,6 +17,13 @@ cantechControllers.controller('WorkersCtrl', ['$scope', '$http', '$routeParams',
         });
     }]);
 
+cantechControllers.controller('ParticipantsCtrl', ['$scope', '$http', '$routeParams',
+    function ($scope, $http, $routeParams) {
+        $http.get('/api/class/' + $routeParams.id + "/participant_registration").success(function (data) {
+            $scope.participants = data.results;
+        });
+    }]);
+
 
 
 cantechControllers.controller('FooterCtrl', ['$scope', '$http', '$routeParams',

@@ -11,21 +11,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Doe</td>
-        <td>John</td>
-        <td>604-555-555</td>
-        <td class=""><input id="checkbox-signin" type="checkbox"></td>
-        <td><input id="checkbox-signout" type="checkbox"></td>
-    </tr>
-    <tr>
-        <td>Doe</td>
-        <td>John</td>
+    <tr ng-repeat="participant in participants">
+        <td>{{participant.first_name}}</td>
+        <td>{{participant.last_name}}</td>
         <td>604-555-555</td>
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" placeholder="datetime" value="02:10">
+                    <input type="text" placeholder="datetime" value="{{participant.attendance.signin.time | date:'H:mm' }}">
                 </div>
                 <div class="small-3 columns">
                     <span class="postfix"><i class="fi-pencil"></i></span>
