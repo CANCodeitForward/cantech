@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.23)
 # Database: candb
-# Generation Time: 2015-07-26 04:03:12 +0000
+# Generation Time: 2015-07-26 04:55:28 +0000
 # ************************************************************
 
 
@@ -34,6 +34,17 @@ CREATE TABLE `class` (
   CONSTRAINT `class_ibfk_1` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `class` WRITE;
+/*!40000 ALTER TABLE `class` DISABLE KEYS */;
+
+INSERT INTO `class` (`id`, `session_id`, `date`)
+VALUES
+	(1,1,NULL),
+	(2,2,NULL),
+	(3,2,NULL);
+
+/*!40000 ALTER TABLE `class` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table participant
@@ -108,6 +119,46 @@ CREATE TABLE `session` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `session` WRITE;
+/*!40000 ALTER TABLE `session` DISABLE KEYS */;
+
+INSERT INTO `session` (`id`, `name`, `start_date`, `end_date`, `venue`)
+VALUES
+	(1,'soccer',NULL,NULL,'Vancouver'),
+	(2,'tennis',NULL,NULL,'Victoria'),
+	(3,'softball',NULL,NULL,'Vancouver');
+
+/*!40000 ALTER TABLE `session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table session_worker
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `session_worker`;
+
+CREATE TABLE `session_worker` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `session_id` int(11) unsigned DEFAULT NULL,
+  `worker_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `session_id` (`session_id`),
+  KEY `worker_id` (`worker_id`),
+  CONSTRAINT `session_worker_ibfk_1` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`),
+  CONSTRAINT `session_worker_ibfk_2` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `session_worker` WRITE;
+/*!40000 ALTER TABLE `session_worker` DISABLE KEYS */;
+
+INSERT INTO `session_worker` (`id`, `session_id`, `worker_id`)
+VALUES
+	(1,2,1),
+	(2,1,2),
+	(3,2,2);
+
+/*!40000 ALTER TABLE `session_worker` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table user
@@ -126,6 +177,15 @@ CREATE TABLE `user` (
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+
+INSERT INTO `user` (`id`, `email`, `password`, `type`, `worker_id`)
+VALUES
+	(1,'anubhav@asdasd.com','123123','worker',NULL);
+
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table worker
@@ -143,6 +203,16 @@ CREATE TABLE `worker` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `worker` WRITE;
+/*!40000 ALTER TABLE `worker` DISABLE KEYS */;
+
+INSERT INTO `worker` (`id`, `email_address`, `first_name`, `last_name`, `phone_number`, `type`)
+VALUES
+	(1,'anubhavmishra@live.com','Anubhav','Mishra','2508574841','coach'),
+	(2,'lkysow@gmail.com','Luke','Kysow','1231231234','admin');
+
+/*!40000 ALTER TABLE `worker` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table worker_attendance
