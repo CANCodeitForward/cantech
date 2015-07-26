@@ -60,22 +60,39 @@ $footer-height: 80px;
 			float: left;
 		}
 		.-title {
+			margin-top: 20px;
 			color: $blue;
 			font-weight: bold;
+			font-size: 20px;
 		}
 		.-log-out {
+			font-size: 14px;
+		}
+		.-log-out a{
 			color: $green;
+			font-weight: bold;
 		}
 	}
 
 	.session-listing {
 		@include sidebar-border;
+		padding-left: 50px;
+		padding-top: 5px;
+		padding-bottom: 5px;
 
 		.-title {
 			color: $blue;
 			font-weight: bold;
 		}
+		.-title a{
+			color: $blue;
+			font-weight: bold;
+		}
 		.-dates {
+			color: $grey;
+			line-height: 0.9em;
+		}
+		.-venue {
 			color: $grey;
 		}
 		.-classes-dates {
@@ -114,17 +131,20 @@ $footer-height: 80px;
 		margin: 200px auto 0;
 	}
 	.-title {
+		margin-top: 20px;
 		color: $blue;
 		font-weight: bold;
 		text-align: left;
 		font-size: 20px;
+		padding-left: 11px;
 	}
 	.-sub-heading {
 		font-weight: bold;
 		color: $green;
 		font-size: 14px;
 		text-align: left;
-		padding-bottom: 20px;
+		padding-bottom: 4px;
+		padding-left: 11px;
 	}
 	.table-header {
 		color: $blue;
@@ -132,6 +152,16 @@ $footer-height: 80px;
 		text-align: left;
 		font-size: 16px;
 		padding-bottom: 10px;
+		    padding-left: 11px;
+	}
+	.content-table {
+		border: none;
+	}
+	.table-heading {
+		font-size: 16px;
+	}
+	.table-content td{
+		padding: 5px;
 	}
 }
 
