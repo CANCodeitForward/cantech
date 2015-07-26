@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cantechApp">
+<head>
+    <title>CANTech Login</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/foundation-icons.css">
+</head>
+<body>
+<div class="container">
+    <div class="row full-width">
+        <!-- read this for the grid: http://foundation.zurb.com/docs/components/grid.html -->
+        <ng-include src="'/partials/sidebar.html'"></ng-include>
+        <div class="large-8 columns main">
+            <div class="row main-display">
+                <!--<div ng-view></div>-->
+                    <div class="-title">May 16th 2015</div>
+                    <div class="-sub-heading">Participants</div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="150">Last Name</th>
+                      <th width="150">First Name</th>
+                      <th width="150">Emergency Contact</th>
+                      <th width="200">Sign In</th>
+                      <th width="200">Sign Out</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Doe</td>
+                      <td>John</td>
+                      <td>604-555-555</td>
+                      <td class=""><input id="checkbox-signin" type="checkbox"></td>
+                      <td><input id="checkbox-signout" type="checkbox"></td>
+                    </tr>
+                    <tr>
+                      <td>Doe</td>
+                      <td>John</td>
+                      <td>604-555-555</td>
+                      <td>
+                        <div class="row collapse postfix-radius">
+                            <div class="small-9 columns">
+                              <input type="text" placeholder="datetime" value="02:10">
+                            </div>
+                            <div class="small-3 columns">
+                              <span class="postfix"><i class="fi-pencil"></i></span>
+                            </div>
+                        </div>
+                      </td>
+                      <td><input id="checkbox-signout" type="checkbox"></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- footer-push is used for the sticky footer -->
+    <div class="footer-push"></div>
+</div>
+
+<div class="footer">
+    <div class="row">
+        <ng-include src="'/partials/footer-nav.html'"></ng-include>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-route.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-resource.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+</body>
+</html>
