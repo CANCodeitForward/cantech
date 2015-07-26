@@ -6697,6 +6697,9 @@ body {
     font-size: 16px;
     padding-bottom: 10px; }
 
+.login-messages {
+  display: none; }
+
 .footer, .footer-push {
   height: 80px; }
 
