@@ -50,6 +50,7 @@ if ('development' == app.get('env')) {
 
 // Index Page
 app.get('/', routes.index);
+app.get('/class', routes.class);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
 app.get('/logout', authUser, routes.logout_user);
