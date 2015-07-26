@@ -28,7 +28,6 @@ exports.class_registrations = function(req, res){
     res.json({ "message": "classid cannot be empty!", "status": "error"}, 404);
   }
 
-  var worker_id = req.session.worker_id;
   // This SQL query returns all the participants who are registered for a particular class
   var sql = 'select session.name, class.id as class_id, class.session_id, participant_registration.participant_id, participant.first_name, participant.last_name, participant.email_address from (candb.participant_registration inner join (candb.class inner join candb.session on class.session_id = session.id) on participant_registration.session_id = class.session_id) inner join candb.participant on participant_registration.participant_id = participant.id where class.id = ' + classid +' ORDER BY participant.last_name;'
   var query = connection.query(sql, function(err, result) {   
@@ -37,11 +36,21 @@ exports.class_registrations = function(req, res){
       res.json({"message": "Something went wrong!", "results": null}, 500); 
     } else {
       if (result.length === 0) {
-        res.json({"message": "No sessions or classes", "results": null}, 404); 
+        res.json({"message": "No registrations found", "results": null}, 404); 
       } else {
         console.log(result);
-        // Return to view
-        res.json({"message": "Successfully gathered sessions and associated classes", "results": result}, 200);
+        // This SQL query returns all the participants who have signed in and signed out
+        sql = 'select participant_attendance.participant_id, participant_attendance.time, participant_attendance.type from candb.participant_attendance where participant_attendance.class_id = ' + classid + ' ORDER BY participant_id;';
+        var query2 = connection.query(sql, function(err, result2) {
+          // We manually stitch the two results together because the two existing SQL queries are complicated enough
+          result.forEach(function (currentValue) {
+            currentValue.attendance = result2.filter(function matchingParticipants(filterValue) {
+             return filterValue.participant_id == currentValue.participant_id;
+            });
+          });
+          // Return to view
+          res.json({"message": "Successfully gathered registrations and attendance", "results": result}, 200);
+        });
       }
     }
   });
