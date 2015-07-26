@@ -33,8 +33,8 @@ exports.dashboard = function(req, res) {
     res.render('dashboard');
 };
 
-exports.class = function(req, res) {
-    res.render('class');
+exports.sidebar_accordian = function(req, res) {
+    res.render('sidebar-accordian');
 };
 
 exports.login_user = function(req, res){
