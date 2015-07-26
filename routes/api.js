@@ -115,8 +115,17 @@ exports.class_participant_registrations = function(req, res){
         var query2 = connection.query(sql, function(err, result2) {
           // We manually stitch the two results together because the two existing SQL queries are complicated enough
           result.forEach(function (currentValue) {
-            currentValue.attendance = result2.filter(function matchingParticipants(filterValue) {
-             return filterValue.participant_id == currentValue.participant_id;
+            var attendanceRecords = result2.filter(function matchingParticipants(filterValue) {
+              return filterValue.participant_id == currentValue.participant_id;
+            });
+
+            currentValue.attendance = {};
+            attendanceRecords.forEach(function(record) {
+              if (record.type == 0) {
+                currentValue.attendance.signout = record;
+              } else {
+                currentValue.attendance.signin = record;
+              }
             });
           });
           // Return to view
