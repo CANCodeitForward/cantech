@@ -46,6 +46,7 @@ app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
 
 app.get('/sessions', routes.sessions);
+app.post('/class/:id/attendance/:participant_id', routes.class_attendance);
 
 // Create server
 http.createServer(app).listen(3000, function(){
