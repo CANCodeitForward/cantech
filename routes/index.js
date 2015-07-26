@@ -53,12 +53,10 @@ exports.login_user = function(req, res){
     var query = connection.query(sql, function(err, result) {   
         if (err){ 
             console.log(err);
-            res.json({"message": "Something went wrong!", valid: false}); 
-            return;
+            res.json({"message": "Something went wrong!", valid: false}, 500);
         }else{
          if (result.length === 0) {
-            res.json({"message": "User doesn't exists!", valid: false});
-            return; 
+            res.json({"message": "User doesn't exists!", valid: false}, 404);
          } else {
             // Set user id
             var user_id = result[0].id;
@@ -73,6 +71,7 @@ exports.login_user = function(req, res){
             }
         }
     });
+
 };
 
 exports.logout_user = function(req, res) {
