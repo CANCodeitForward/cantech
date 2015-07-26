@@ -19,14 +19,22 @@
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" class="time-picker" data-hour="{{staffMember.attendance.signin.time | date:'H' }}" data-minute="{{participant.attendance.signin.time | date:'mm' }}">
+                    <input type="text" class="time-picker" data-type="signin"
+                           data-has-been-set="{{ staffMember.attendance.signin.time != null ? true : false }}"
+                           data-worker-id="{{staffMember.worker_id}}"
+                           data-hour="{{staffMember.attendance.signin.time | date:'H' }}"
+                           data-minute="{{staffMember.attendance.signin.time | date:'mm' }}">
                 </div>
             </div>
         </td>
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" class="time-picker" data-hour="{{staffMember.attendance.signout.time | date:'H' }}" data-minute="{{participant.attendance.signout.time | date:'mm' }}">
+                    <input type="text" class="time-picker" data-type="signout"
+                           data-has-been-set="{{ staffMember.attendance.signout.time != null ? true : false }}"
+                           data-worker-id="{{staffMember.worker_id}}"
+                           data-hour="{{staffMember.attendance.signout.time | date:'H' }}"
+                           data-minute="{{staffMember.attendance.signout.time | date:'mm' }}">
                 </div>
             </div>
         </td>
@@ -53,14 +61,22 @@
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" class="time-picker" data-hour="{{staffMember.attendance.signin.time | date:'H' }}" data-minute="{{participant.attendance.signin.time | date:'mm' }}">
+                    <input type="text" class="time-picker" data-type="signin"
+                           data-has-been-set="{{ staffMember.attendance.signin.time != null ? true : false }}"
+                           data-worker-id="{{staffMember.worker_id}}"
+                           data-hour="{{staffMember.attendance.signin.time | date:'H' }}"
+                           data-minute="{{staffMember.attendance.signin.time | date:'mm' }}">
                 </div>
             </div>
         </td>
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" class="time-picker" data-hour="{{staffMember.attendance.signout.time | date:'H' }}" data-minute="{{participant.attendance.signout.time | date:'mm' }}">
+                    <input type="text" class="time-picker" data-type="signout"
+                           data-has-been-set="{{ staffMember.attendance.signout.time != null ? true : false }}"
+                           data-worker-id="{{staffMember.worker_id}}"
+                           data-hour="{{staffMember.attendance.signout.time | date:'H' }}"
+                           data-minute="{{staffMember.attendance.signout.time | date:'mm' }}">
                 </div>
             </div>
         </td>
