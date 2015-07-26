@@ -33,10 +33,6 @@ exports.dashboard = function(req, res) {
     res.render('dashboard');
 };
 
-exports.sidebar_accordian = function(req, res) {
-    res.render('sidebar-accordian');
-};
-
 exports.login_user = function(req, res){
 
     var email = sanitizer.sanitize(req.body.email);
