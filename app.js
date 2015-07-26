@@ -8,7 +8,7 @@ var http = require('http');
 var https = require('https');
 var path = require('path');
 var fs = require("fs");
-var app = express(); 
+var app = express();
 
 // all environments
 app.set('views', path.join(__dirname, 'views'));
@@ -44,6 +44,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
+app.get('/dashboard', routes.dashboard);
 
 app.get('/dashboard', routes.dashboard);
 
