@@ -99,3 +99,14 @@ exports.sessions = function(req, res){
 
     }
 };
+
+exports.class_attendance = function(req, res){
+
+    var worker_id = req.session.worker_id;
+    var class_id = req.params.id;
+    var participant = req.params.participant_id;
+
+    var req_data = req.body.data;
+    
+
+};
