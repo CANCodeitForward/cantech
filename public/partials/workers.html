@@ -1,7 +1,7 @@
 <div class="-title">May 16th 2015</div>
 <div class="-sub-heading">Workers</div>
-<table>
-    <thead>
+<table class="content-table">
+    <thead class="table-heading">
     <div class="table-header">Staff</div>
     <tr>
         <th width="150">Last Name</th>
@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="staffMember in staff">
+    <tr ng-repeat="staffMember in staff" class="table-content">
         <td>{{staffMember.first_name}}</td>
         <td>{{staffMember.last_name}}</td>
         <td>{{staffMember.email_address}}</td>
@@ -46,7 +46,7 @@
     </thead>
     <tbody>
     <!-- using staffMember here so I can copy code, these are volunteers -->
-    <tr ng-repeat="staffMember in volunteers">
+    <tr ng-repeat="staffMember in volunteers" class="table-content">
         <td>{{staffMember.first_name}}</td>
         <td>{{staffMember.last_name}}</td>
         <td>{{staffMember.email_address}}</td>
