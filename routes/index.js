@@ -108,7 +108,6 @@ exports.class_participant_attendance = function(req, res){
     var class_id = req.params.id;
     var participant_id = req.params.participant_id;
     var req_data = req.body;
-    console.log(req_data);
 
     var timestamp = req_data.timestamp;
     var type;
