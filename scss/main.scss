@@ -135,6 +135,10 @@ $footer-height: 80px;
 	}
 }
 
+.login-messages {
+	display: none;
+}
+
 .footer, .footer-push {
 	height: $footer-height;
 }
