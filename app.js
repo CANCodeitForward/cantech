@@ -45,6 +45,8 @@ app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
 
+app.get('/dashboard', routes.dashboard);
+
 // Create server
 http.createServer(app).listen(3000, function(){
   console.log('Express server listening on port ' + 3000 + ' in ' + app.get('env') + ' mode');
