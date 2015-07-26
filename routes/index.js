@@ -107,6 +107,9 @@ exports.class_attendance = function(req, res){
     var participant = req.params.participant_id;
 
     var req_data = req.body.data;
-    
+
+    if(req_data.type == "signin"){
+     // do sql here   
+    }
 
 };
