@@ -26,6 +26,11 @@ exports.login = function(req, res){
     res.render("login");
 };
 
+exports.dashboard = function(req, res) {
+    res.render('dashboard');
+};
+
+
 exports.login_user = function(req, res){
 
     var email = sanitizer.sanitize(req.body.email);
@@ -73,5 +78,3 @@ exports.dashboard = function(req, res){
     
     }
 };
-
-
