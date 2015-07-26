@@ -84,13 +84,21 @@ $footer-height: 80px;
 		color: $blue;
 		font-weight: bold;
 		text-align: left;
+		font-size: 20px;
 	}
 	.-sub-heading {
 		font-weight: bold;
 		color: $green;
-		font-size: 12px;
+		font-size: 14px;
 		text-align: left;
 		padding-bottom: 20px;
+	}
+	.table-header {
+		color: $blue;
+		font-weight: bold;
+		text-align: left;
+		font-size: 16px;
+		padding-bottom: 10px;
 	}
 }
 
