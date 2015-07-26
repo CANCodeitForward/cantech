@@ -6640,18 +6640,32 @@ body {
   .sidebar .coach-avatar .-logo {
     float: left; }
   .sidebar .coach-avatar .-title {
+    margin-top: 20px;
     color: #003D7D;
-    font-weight: bold; }
+    font-weight: bold;
+    font-size: 20px; }
   .sidebar .coach-avatar .-log-out {
-    color: #008752; }
+    font-size: 14px; }
+  .sidebar .coach-avatar .-log-out a {
+    color: #008752;
+    font-weight: bold; }
 .sidebar .session-listing {
   border: 1px solid #919191;
   border-top: none;
-  border-left: none; }
+  border-left: none;
+  padding-left: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px; }
   .sidebar .session-listing .-title {
     color: #003D7D;
     font-weight: bold; }
+  .sidebar .session-listing .-title a {
+    color: #003D7D;
+    font-weight: bold; }
   .sidebar .session-listing .-dates {
+    color: #919191;
+    line-height: 0.9em; }
+  .sidebar .session-listing .-venue {
     color: #919191; }
   .sidebar .session-listing .-classes-dates {
     font-size: 14px; }
@@ -6680,22 +6694,32 @@ body {
   .main-display .can-logo-splash {
     margin: 200px auto 0; }
   .main-display .-title {
+    margin-top: 20px;
     color: #003D7D;
     font-weight: bold;
     text-align: left;
-    font-size: 20px; }
+    font-size: 20px;
+    padding-left: 11px; }
   .main-display .-sub-heading {
     font-weight: bold;
     color: #008752;
     font-size: 14px;
     text-align: left;
-    padding-bottom: 20px; }
+    padding-bottom: 4px;
+    padding-left: 11px; }
   .main-display .table-header {
     color: #003D7D;
     font-weight: bold;
     text-align: left;
     font-size: 16px;
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    padding-left: 11px; }
+  .main-display .content-table {
+    border: none; }
+  .main-display .table-heading {
+    font-size: 16px; }
+  .main-display .table-content td {
+    padding: 5px; }
 
 .login-messages {
   display: none; }
