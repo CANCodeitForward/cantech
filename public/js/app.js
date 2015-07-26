@@ -3,7 +3,7 @@
 /* App Module */
 var cantechApp = angular.module('cantechApp', [
     'ngRoute',
-    'phonecatControllers'
+    'cantechControllers'
 ]);
 
 cantechApp.config(['$routeProvider',
