@@ -6621,6 +6621,11 @@ body {
   margin: 0 auto;
   margin-bottom: -80px; }
 
+.background-overlay {
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(136, 141, 189, 0.6)), url("/images/bg.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat; }
+
 .row.full-width {
   max-width: 100% !important; }
   .row.full-width .row {
@@ -6654,6 +6659,21 @@ body {
     display: none; }
     .sidebar .session-listing .-classes.x-show {
       display: block; }
+
+.login-form {
+  margin: 0px auto;
+  margin-top: 135px;
+  padding: 40px;
+  max-width: 40%;
+  background-color: white; }
+  .login-form .-login-button {
+    margin-top: 10px;
+    outline-style: solid;
+    outline-color: #003D7D;
+    outline-offset: 5px;
+    outline-width: 10px;
+    width: 92.5%;
+    background-color: #008752; }
 
 .main-display {
   text-align: center; }
