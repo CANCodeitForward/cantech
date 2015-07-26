@@ -31,7 +31,7 @@ function authUser(req, res, next) {
   if (req.session.worker_id) {
     return next();
   } else {
-    return next(new Error('Failed login'));
+    res.redirect('/');
   }
 }
 
