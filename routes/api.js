@@ -20,8 +20,8 @@ var connection = mysql.createConnection({
 
 exports.sessions = function(req, res){
   var worker_id = req.session.worker_id;
-  // Create mysql query 
-  var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue, class.id as class_id, class.date as class_date FROM candb.session INNER JOIN candb.session_worker ON session.id=session_worker.session_id INNER JOIN candb.class ON session.id=class.session_id WHERE session_worker.worker_id=' + worker_id + ' ORDER BY session_id;';
+  // First get all the sessions to which the current worker has been assigned
+  var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue FROM candb.session INNER JOIN candb.worker_registration ON session.id = worker_registration.session_id WHERE worker_registration.worker_id = ' + worker_id + ' ORDER BY session_id;';
   var query = connection.query(sql, function(err, result) {   
     if (err) { 
       console.log(err);
@@ -30,9 +30,22 @@ exports.sessions = function(req, res){
       if (result.length === 0) {
         res.json({"message": "No sessions or classes", "results": null}, 404); 
       } else {
+        var session_ids = result.map(function(value) {
+          return value.session_id;
+        });
+        console.log('just session ids: ' + JSON.stringify(session_ids));
         console.log(result);
-        // Return to view
-        res.json({"message": "Successfully gathered sessions and associated classes", "results": result}, 200);
+        // Manually stitch the classes for those sessions because we do not want duplicate session information
+        sql = 'SELECT class.id AS class_id, class.date as class_date, class.session_id FROM candb.session INNER JOIN candb.class ON class.session_id = session.id WHERE session.id IN (' + session_ids.join(',') + ');';
+        var query2 = connection.query(sql, function(err, result2) {
+          result.forEach(function (currentValue) {
+            currentValue.classes = result2.filter(function matchingSession(filterValue) {
+             return filterValue.session_id == currentValue.session_id;
+            });
+          });
+          // Return to view
+          res.json({"message": "Successfully gathered sessions and classes", "results": result}, 200);
+        });
       }
     }
   });
