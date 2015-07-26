@@ -80,8 +80,7 @@ exports.sessions = function(req, res){
 
         var worker_id = req.session.worker_id;
         // Create mysql query 
-        var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue, class.id as class_id, class.date as class_date FROM candb.session INNER JOIN candb.session_worker ON session.id=session_worker.session_id INNER JOIN candb.class ON session.id=class.session_id WHERE session_worker.worker_id=' + worker_id + ' ORDER BY session_id;' 
-        // Get user id if it is a valid user
+        var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue, class.id as class_id, class.date as class_date FROM candb.session INNER JOIN candb.session_worker ON session.id=session_worker.session_id INNER JOIN candb.class ON session.id=class.session_id WHERE session_worker.worker_id=' + worker_id + ' ORDER BY session_id;';
         var query = connection.query(sql, function(err, result) {   
         if (err){ 
             console.log(err);
@@ -100,16 +99,64 @@ exports.sessions = function(req, res){
     }
 };
 
-exports.class_attendance = function(req, res){
+// Request: { "data": { "type": "signin/signout", "timestamp": "DATETIME" } }
+exports.class_participant_attendance = function(req, res){
 
     var worker_id = req.session.worker_id;
     var class_id = req.params.id;
-    var participant = req.params.participant_id;
-
+    var participant_id = req.params.participant_id;
     var req_data = req.body.data;
 
+    var timestamp = req_data.timestamp;
+    var type;
+
     if(req_data.type == "signin"){
-     // do sql here   
+        type = 1;
     }
+    if(req_data.type == "signout"){
+        type = 0;
+    }
+
+    // Prepare user data for DB insert 
+    var values = { class_id: class_id, participant_id: participant_id, time: timestamp, type: type };
+    // Insert into MySQL
+    var query = connection.query('INSERT INTO candb.participant_attendance SET ?', values, function(err, result) {
+    if (err){ 
+        console.log('Sign Up failed!');
+        res.json(500, { error: 'Something really went wrong!'});
+    }else{
+        res.json({"message": "Signedin!", "results": result}, 200);
+    }});
+
+};
+
+// Request: { "data": { "type": "signin/signout", "timestamp": "DATETIME" } }
+exports.class_worker_attendance = function(req, res){
+
+    var worker_id = req.session.worker_id;
+    var class_id = req.params.id;
+    var participant_id = req.params.worker_id;
+    var req_data = req.body.data;
+
+    var timestamp = req_data.timestamp;
+    var type;
+    
+    if(req_data.type == "signin"){
+        type = 1;
+    }
+    if(req_data.type == "signout"){
+        type = 0;
+    }
+
+    // Prepare user data for DB insert 
+    var values = { class_id: class_id, participant_id: participant_id, time: timestamp, type: type };
+    // Insert into MySQL
+    var query = connection.query('INSERT INTO candb.worker_attendance SET ?', values, function(err, result) {
+    if (err){ 
+        console.log('Sign Up failed!');
+        res.json(500, { message: 'Something really went wrong!' });
+    }else{
+        res.json({"message": "Signedin!", "results": result}, 200);
+    }});
 
 };
