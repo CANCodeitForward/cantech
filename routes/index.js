@@ -18,18 +18,13 @@ var connection = mysql.createConnection({
     password : config.MYSQL_PASSWORD
 });
 
-exports.index = function(req, res){ 
-    res.send("HEY!");
+exports.index = function(req, res){
+    res.render('dashboard');
 };
 
 exports.login = function(req, res){ 
     res.render("login");
 };
-
-exports.dashboard = function(req, res) {
-    res.render('dashboard');
-};
-
 
 exports.login_user = function(req, res){
 
