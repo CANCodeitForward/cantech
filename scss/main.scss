@@ -72,6 +72,16 @@ $footer-height: 80px;
 		.-dates {
 			color: $grey;
 		}
+		.-classes-dates {
+			font-size: 14px;
+		}
+		.-classes {
+			display: none;
+
+			&.x-show {
+				display: block;
+			}
+		}
 	}
 }
 

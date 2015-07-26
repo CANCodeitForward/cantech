@@ -7,6 +7,9 @@ cantechControllers.controller('NavCtrl', ['$scope', '$http',
     function ($scope, $http) {
         $http.get('/api/sessions').success(function (data) {
             $scope.sessions = data.results;
+            $scope.toggleSession = function (session) {
+                session.toggle = session.toggle ? null : 'x-show';
+            };
         });
     }]);
 

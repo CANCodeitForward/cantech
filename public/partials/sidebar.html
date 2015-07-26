@@ -9,9 +9,16 @@
     </div>
     <div class="row session-listing" ng-repeat="session in sessions">
         <!-- TODO: we need individual classes here -->
-        <div class="-title "><a ng-href="#/classes/{{session.session_id}}/workers">{{ session.session_name }}</a></div>
+        <div class="-title "><a ng-click="toggleSession(session)">{{ session.session_name }}</a></div>
         <div class="-dates">{{ session.session_start_date}} - {{ session.session_end_date }}</div>
         <div class="-venue">{{ session.session_venue }}</div>
         <div class="-current-status x-today">{{session.status}}</div>
+
+        <div class="-classes {{session.toggle}}">
+            <div class="-classes-dates"><a ng-href="#/classes/{{session.classes.class_id}}/workers">2015-07-04T17:30:00.000Z - 2015-08-22T18:30:00.000Z</a></div>
+            <div class="-classes-dates"><a ng-href="#/classes/{{session.classes.class_id}}/workers">2015-07-04T17:30:00.000Z - 2015-08-22T18:30:00.000Z</a></div>
+            <div class="-classes-dates"><a ng-href="#/classes/{{session.classes.class_id}}/workers">2015-07-04T17:30:00.000Z - 2015-08-22T18:30:00.000Z</a></div>
+        </div>
+
     </div>
 </div>
