@@ -4,6 +4,7 @@
  
 var express = require('express');
 var routes = require('./routes/index');
+var api = require('./routes/api');
 var http = require('http');
 var https = require('https');
 var path = require('path');
@@ -26,6 +27,13 @@ app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+function authUser(req, res, next) {
+  if (req.session.worker_id) {
+    return next();
+  } else {
+    return next(new Error('Failed login'));
+  }
+}
 
 app.enable('verbose errors');
 
@@ -46,6 +54,9 @@ app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
 
 app.get('/sessions', routes.sessions);
+app.get('/api/class/:classid/registration', authUser, api.class_registrations);
+
+
 
 // Create server
 http.createServer(app).listen(3000, function(){
