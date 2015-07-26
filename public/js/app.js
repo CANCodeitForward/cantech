@@ -15,7 +15,7 @@ cantechApp.config(['$routeProvider',
             }).
             when('/classes/:id/participants', {
                 templateUrl: 'partials/participants.html',
-                controller: 'ParticipantsCtrl'
+                controller: 'ParticipantCtrl'
             }).
             when('/classes/:id/report', {
                 templateUrl: 'partials/report.html',
@@ -23,6 +23,6 @@ cantechApp.config(['$routeProvider',
             }).
             when('/', {
                 templateUrl: 'partials/splash.html',
-                controller: 'ClassCtrl'
+                controller: 'SplashCtrl'
             })
     }]);
