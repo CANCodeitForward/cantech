@@ -26,7 +26,7 @@
 DROP TABLE IF EXISTS `class`;
 
 CREATE TABLE `class` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,,
   `session_id` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -42,7 +42,7 @@ CREATE TABLE `class` (
 DROP TABLE IF EXISTS `participant`;
 
 CREATE TABLE `participant` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `email_address` varchar(64) DEFAULT NULL,
   `gender` varchar(8) DEFAULT NULL,
   `first_name` varchar(32) DEFAULT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE `participant` (
 DROP TABLE IF EXISTS `participant_attendance`;
 
 CREATE TABLE `participant_attendance` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `class_id` int(11) DEFAULT NULL,
   `participant_id` int(11) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE `participant_attendance` (
 DROP TABLE IF EXISTS `participant_registration`;
 
 CREATE TABLE `participant_registration` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `session_id` int(11) DEFAULT NULL,
   `participant_id` int(11) DEFAULT NULL,
   `status` varchar(32) DEFAULT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `participant_registration` (
 DROP TABLE IF EXISTS `session`;
 
 CREATE TABLE `session` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `session` (
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
@@ -143,7 +143,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `worker`;
 
 CREATE TABLE `worker` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `email_address` varchar(64) DEFAULT NULL,
   `first_name` varchar(32) DEFAULT NULL,
   `last_name` varchar(32) DEFAULT NULL,
@@ -169,7 +169,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `worker_attendance`;
 
 CREATE TABLE `worker_attendance` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `class_id` int(11) DEFAULT NULL,
   `worker_id` int(11) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
@@ -189,7 +189,7 @@ CREATE TABLE `worker_attendance` (
 DROP TABLE IF EXISTS `worker_registration`;
 
 CREATE TABLE `worker_registration` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `session_id` int(11) DEFAULT NULL,
   `worker_id` int(11) DEFAULT NULL,
   `status` varchar(32) DEFAULT NULL,

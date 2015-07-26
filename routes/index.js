@@ -74,7 +74,24 @@ exports.dashboard = function(req, res){
     if(!req.session.email){
         res.redirect('/');
     }else{
+        
+        // Create mysql query 
+        var sql = 'SELECT session_id, name as session_name, venue, start_date, end_date, date as class_datetime FROM session INNER JOIN class ON session.id=class.session_id;' 
+        // Get user id if it is a valid user
+        var query = connection.query(sql, function(err, result) {   
+        if (err){ 
+            console.log(err);
+            res.json({"message": "Something went wrong!", "results": null}); 
+        }else{
+         if (result.length === 0) {
+            res.json({"message": "No sessions or classes", "results": null}); 
+         } else {
+            console.log(result);
+            // Return to view
+            res.json({"message": "Successfully logged in!", valid: true}, 200);
+            }
+        }
+    });
 
-    
     }
 };
