@@ -8,7 +8,8 @@
         </div>
     </div>
     <div class="row session-listing" ng-repeat="session in sessions">
-        <div class="-title "><a ng-href="#/session/{{session.session_id}}">{{ session.session_name }}</a></div>
+        <!-- TODO: we need individual classes here -->
+        <div class="-title "><a ng-href="#/classes/{{session.session_id}}">{{ session.session_name }}</a></div>
         <div class="-dates">{{ session.session_start_date}} - {{ session.session_end_date }}</div>
         <div class="-venue">{{ session.session_venue }}</div>
         <div class="-current-status x-today">{{session.status}}</div>
