@@ -69,26 +69,30 @@ exports.login_user = function(req, res){
     });
 };
 
-exports.dashboard = function(req, res){ 
+exports.sessions = function(req, res){
+
+    req.session.email = "anubhavmishra@live.com";
+    req.session.worker_id = "2";
 
     if(!req.session.email){
         res.redirect('/');
     }else{
-        
+
+        var worker_id = req.session.worker_id;
         // Create mysql query 
-        var sql = 'SELECT session_id, name as session_name, venue, start_date, end_date, date as class_datetime FROM session INNER JOIN class ON session.id=class.session_id;' 
+        var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue, class.id as class_id, class.date as class_date FROM candb.session INNER JOIN candb.session_worker ON session.id=session_worker.session_id INNER JOIN candb.class ON session.id=class.session_id WHERE session_worker.worker_id=' + worker_id + ' ORDER BY session_id;' 
         // Get user id if it is a valid user
         var query = connection.query(sql, function(err, result) {   
         if (err){ 
             console.log(err);
-            res.json({"message": "Something went wrong!", "results": null}); 
+            res.json({"message": "Something went wrong!", "results": null}, 500); 
         }else{
          if (result.length === 0) {
-            res.json({"message": "No sessions or classes", "results": null}); 
+            res.json({"message": "No sessions or classes", "results": null}, 404); 
          } else {
             console.log(result);
             // Return to view
-            res.json({"message": "Successfully logged in!", valid: true}, 200);
+            res.json({"message": "Successfully gathered sessions and associated classes", "results": result}, 200);
             }
         }
     });
