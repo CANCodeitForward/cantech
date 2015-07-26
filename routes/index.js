@@ -19,7 +19,11 @@ var connection = mysql.createConnection({
 });
 
 exports.index = function(req, res){
+  if (req.session.worker_id) {
     res.render('dashboard');
+  } else {
+    res.render('login');
+  }
 };
 
 exports.login = function(req, res){ 
