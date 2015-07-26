@@ -56,6 +56,8 @@ app.get('/sessions', routes.sessions);
 app.get('/api/class/:classid/registration', authUser, api.class_registrations);
 app.post('/class/:id/attendance_participant/:participant_id', routes.class_participant_attendance);
 app.post('/class/:id/attendance_worker/:worker_id', routes.class_worker_attendance);
+app.patch('/class/:id/attendance_participant/:participant_id', routes.class_participant_attendance_update);
+app.patch('/class/:id/attendance_worker/:worker_id', routes.class_worker_attendance_update);
 
 // Create server
 http.createServer(app).listen(3000, function(){
