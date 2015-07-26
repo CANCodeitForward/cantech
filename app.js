@@ -52,11 +52,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
-
 app.get('/sessions', routes.sessions);
 app.get('/api/class/:classid/registration', authUser, api.class_registrations);
-
-
+app.post('/class/:id/attendance/:participant_id', routes.class_attendance);
 
 // Create server
 http.createServer(app).listen(3000, function(){
