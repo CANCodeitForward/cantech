@@ -13,18 +13,37 @@ cantechControllers.controller('NavCtrl', ['$scope', '$http',
         });
     }]);
 
-cantechControllers.controller('WorkerCtrl', ['$scope', '$http', '$routeParams', '$filter',
-    function ($scope, $http, $routeParams, $filter) {
+cantechControllers.controller('WorkerCtrl', ['$scope', '$http', '$routeParams', '$filter', '$timeout',
+    function ($scope, $http, $routeParams, $filter, $timeout) {
         $http.get('/api/class/' + $routeParams.id + "/worker_registration").success(function (data) {
             $scope.volunteers = $filter('filter')(data.results, function(worker) { return worker.type == "Volunteer"; })
             $scope.staff = $filter('filter')(data.results, function(worker) { return worker.type == "Staff"; })
+            $timeout(function () { // You might need this timeout to be sure its run after DOM render.
+                $('.time-picker').each(function(index, elem) {
+                    var picker = $(elem).pickatime({
+                        interval: 5
+                    });
+                    picker.pickatime('set', 'select', $(elem).attr('value'), {format: 'H:mm'});
+                })
+            }, 1, false);
         });
     }]);
 
-cantechControllers.controller('ParticipantCtrl', ['$scope', '$http', '$routeParams', '$filter',
-    function ($scope, $http, $routeParams, $filter) {
+cantechControllers.controller('ParticipantCtrl', ['$scope', '$http', '$routeParams', '$filter', '$timeout',
+    function ($scope, $http, $routeParams, $filter, $timeout) {
         $http.get('/api/class/' + $routeParams.id + "/participant_registration").success(function (data) {
             $scope.participants = data.results;
+
+            $timeout(function () { // You might need this timeout to be sure its run after DOM render.
+                $('.time-picker').each(function(index, elem) {
+                    var picker = $(elem).pickatime({
+                        interval: 5
+                    });
+                    if ($(elem).data('hour') !== "") {
+                        picker.pickatime('picker').set('select', [$(elem).data('hour'), $(elem).data('minute')]);
+                    }
+                })
+            }, 0, false);
         });
     }]);
 

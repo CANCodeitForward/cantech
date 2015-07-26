@@ -18,14 +18,17 @@
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" placeholder="datetime" value="{{participant.attendance.signin.time | date:'H:mm' }}">
-                </div>
-                <div class="small-3 columns">
-                    <span class="postfix"><i class="fi-pencil"></i></span>
+                    <input type="text" class="time-picker" data-hour="{{participant.attendance.signin.time | date:'H' }}" data-minute="{{participant.attendance.signin.time | date:'mm' }}">
                 </div>
             </div>
         </td>
-        <td><input id="checkbox-signout" type="checkbox"></td>
+        <td>
+            <div class="row collapse postfix-radius">
+                <div class="small-9 columns">
+                    <input type="text" class="time-picker" data-hour="{{participant.attendance.signout.time | date:'H' }}" data-minute="{{participant.attendance.signout.time | date:'mm' }}">
+                </div>
+            </div>
+        </td>
     </tr>
     </tbody>
 </table>
