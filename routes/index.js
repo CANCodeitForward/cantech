@@ -64,3 +64,8 @@ exports.login_user = function(req, res){
     });
 };
 
+exports.logout_user = function(req, res) {
+    // Destroy the server-side session
+    req.session.destroy();
+    res.redirect('/');
+}
