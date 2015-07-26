@@ -28,7 +28,6 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 function authUser(req, res, next) {
-  req.session.worker_id = 1;
   if (req.session.worker_id) {
     return next();
   } else {

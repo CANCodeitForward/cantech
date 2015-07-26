@@ -19,7 +19,6 @@ var connection = mysql.createConnection({
 });
 
 exports.index = function(req, res){
-    req.session.worker_id = 1;
     if (req.session.worker_id) {
     res.render('dashboard');
   } else {
@@ -41,9 +40,11 @@ exports.login_user = function(req, res){
 
     if(!email){
         res.json({ "message": "Email cannot be empty!", "status": "error"}, 500);
+        return;
     }
     if(!password){
         res.json({ "message": "Password cannot be empty!", "status": "error"}, 500);
+        return;
     }
 
     // Create mysql query 
@@ -53,9 +54,11 @@ exports.login_user = function(req, res){
         if (err){ 
             console.log(err);
             res.json({"message": "Something went wrong!", valid: false}); 
+            return;
         }else{
          if (result.length === 0) {
-            res.json({"message": "User doesn't exists!", valid: false}); 
+            res.json({"message": "User doesn't exists!", valid: false});
+            return; 
          } else {
             // Set user id
             var user_id = result[0].id;
