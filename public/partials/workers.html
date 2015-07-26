@@ -12,21 +12,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Doe</td>
-        <td>John</td>
-        <td>604-555-555</td>
-        <td class=""><input id="checkbox-signin" type="checkbox"></td>
-        <td><input id="checkbox-signout" type="checkbox"></td>
-    </tr>
-    <tr>
-        <td>Doe</td>
-        <td>John</td>
-        <td>604-555-555</td>
+    <tr ng-repeat="staffMember in staff">
+        <td>{{staffMember.first_name}}</td>
+        <td>{{staffMember.last_name}}</td>
+        <td>{{staffMember.email_address}}</td>
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" placeholder="datetime" value="02:10">
+                    <input type="text" placeholder="datetime" value="{{worker.attendance.signin.time | date:'H:mm' }}">
                 </div>
                 <div class="small-3 columns">
                     <span class="postfix"><i class="fi-pencil"></i></span>
@@ -49,21 +42,15 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Doe</td>
-        <td>John</td>
-        <td>604-555-555</td>
-        <td class=""><input id="checkbox-signin" type="checkbox"></td>
-        <td><input id="checkbox-signout" type="checkbox"></td>
-    </tr>
-    <tr>
-        <td>Doe</td>
-        <td>John</td>
-        <td>604-555-555</td>
+    <!-- using staffMember here so I can copy code, these are volunteers -->
+    <tr ng-repeat="staffMember in volunteers">
+        <td>{{staffMember.first_name}}</td>
+        <td>{{staffMember.last_name}}</td>
+        <td>{{staffMember.email_address}}</td>
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" placeholder="datetime" value="02:10">
+                    <input type="text" placeholder="datetime" value="{{worker.attendance.signin.time | date:'H:mm' }}">
                 </div>
                 <div class="small-3 columns">
                     <span class="postfix"><i class="fi-pencil"></i></span>
