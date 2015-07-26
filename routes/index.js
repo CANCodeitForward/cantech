@@ -25,6 +25,13 @@ exports.index = function(req, res){
 exports.login = function(req, res){ 
     res.render("login");
 };
+exports.dashboard = function(req, res) {
+    res.render('dashboard');
+};
+
+exports.class = function(req, res) {
+    res.render('class');
+};
 
 exports.login_user = function(req, res){
 

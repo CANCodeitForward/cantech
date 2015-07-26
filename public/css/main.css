@@ -6653,6 +6653,16 @@ body {
   text-align: center; }
   .main-display .can-logo-splash {
     margin: 200px auto 0; }
+  .main-display .-title {
+    color: #003D7D;
+    font-weight: bold;
+    text-align: left; }
+  .main-display .-sub-heading {
+    font-weight: bold;
+    color: #008752;
+    font-size: 12px;
+    text-align: left;
+    padding-bottom: 20px; }
 
 .footer, .footer-push {
   height: 80px; }
