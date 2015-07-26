@@ -53,6 +53,7 @@ app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
 app.get('/sessions', routes.sessions);
+app.get('/dashboard', routes.dashboard);
 app.get('/api/class/:classid/registration', authUser, api.class_registrations);
 app.post('/class/:id/attendance_participant/:participant_id', routes.class_participant_attendance);
 app.post('/class/:id/attendance_worker/:worker_id', routes.class_worker_attendance);
