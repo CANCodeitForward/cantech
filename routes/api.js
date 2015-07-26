@@ -63,7 +63,7 @@ exports.class_worker_registrations = function(req, res){
   }
 
   // This SQL query returns all the workers who are registered for a particular class
-  var sql = 'select session.name, class.id as class_id, class.session_id, worker_registration.worker_id, worker.first_name, worker.last_name, worker.email_address from (candb.worker_registration inner join (candb.class inner join candb.session on class.session_id = session.id) on worker_registration.session_id = class.session_id) inner join candb.worker on worker_registration.worker_id = worker.id where class.id = ' + classid +' ORDER BY worker.last_name;'
+  var sql = 'select session.name, class.id as class_id, class.session_id, worker_registration.worker_id, worker.first_name, worker.last_name, worker.email_address, worker.type from (candb.worker_registration inner join (candb.class inner join candb.session on class.session_id = session.id) on worker_registration.session_id = class.session_id) inner join candb.worker on worker_registration.worker_id = worker.id where class.id = ' + classid +' ORDER BY worker.last_name;'
   var query = connection.query(sql, function(err, result) {   
     if (err) {
       console.log(err);
