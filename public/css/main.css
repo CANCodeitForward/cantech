@@ -6656,13 +6656,20 @@ body {
   .main-display .-title {
     color: #003D7D;
     font-weight: bold;
-    text-align: left; }
+    text-align: left;
+    font-size: 20px; }
   .main-display .-sub-heading {
     font-weight: bold;
     color: #008752;
-    font-size: 12px;
+    font-size: 14px;
     text-align: left;
     padding-bottom: 20px; }
+  .main-display .table-header {
+    color: #003D7D;
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+    padding-bottom: 10px; }
 
 .footer, .footer-push {
   height: 80px; }
