@@ -1,5 +1,6 @@
 // User Login
 $('#user-login').submit(function() {
+    console.log("hey!");
     var data = $('#user-login').serialize();
         $.ajax({ 
             url: '/login_user'
