@@ -18,14 +18,22 @@
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" class="time-picker" data-hour="{{participant.attendance.signin.time | date:'H' }}" data-minute="{{participant.attendance.signin.time | date:'mm' }}">
+                    <input type="text" class="time-picker" data-type="signin"
+                           data-has-been-set="{{ participant.attendance.signin.time != null ? true : false }}"
+                           data-participant-id="{{participant.participant_id}}"
+                           data-hour="{{participant.attendance.signin.time | date:'H' }}"
+                           data-minute="{{participant.attendance.signin.time | date:'mm' }}">
                 </div>
             </div>
         </td>
         <td>
             <div class="row collapse postfix-radius">
                 <div class="small-9 columns">
-                    <input type="text" class="time-picker" data-hour="{{participant.attendance.signout.time | date:'H' }}" data-minute="{{participant.attendance.signout.time | date:'mm' }}">
+                    <input type="text" class="time-picker" data-type="signout"
+                           data-has-been-set="{{ participant.attendance.signout.time != null ? true : false }}"
+                           data-participant-id="{{participant.participant_id}}"
+                           data-hour="{{participant.attendance.signout.time | date:'H' }}"
+                           data-minute="{{participant.attendance.signout.time | date:'mm' }}">
                 </div>
             </div>
         </td>

@@ -153,7 +153,10 @@ exports.class_participant_attendance = function(req, res){
   var participant_id = req.params.participant_id;
   var req_data = req.body;
 
-  var timestamp = req_data.timestamp;
+  // we don't care about the actual date, just the hours/minutes
+  var date = new Date();
+  date.setHours(req_data.hour);
+  date.setMinutes(req_data.minute);
   var type;
 
   if(req_data.type == "signin"){
@@ -164,7 +167,7 @@ exports.class_participant_attendance = function(req, res){
   }
 
   // Prepare user data for DB insert 
-  var values = { class_id: class_id, participant_id: participant_id, time: timestamp, type: type };
+  var values = { class_id: class_id, participant_id: participant_id, time: date, type: type };
   // Insert into MySQL
   var query = connection.query('INSERT INTO candb.participant_attendance SET ?', values, function(err, result) {
   if (err){ 
@@ -185,7 +188,9 @@ exports.class_worker_attendance = function(req, res){
   var worker_id = req.params.worker_id;
   var req_data = req.body;
 
-  var timestamp = req_data.timestamp;
+  var date = new Date();
+  date.setHours(req_data.hour);
+  date.setMinutes(req_data.minute);
   var type;
   
   if(req_data.type == "signin"){
@@ -196,7 +201,7 @@ exports.class_worker_attendance = function(req, res){
   }
 
   // Prepare user data for DB insert 
-  var values = { class_id: class_id, worker_id: worker_id, time: timestamp, type: type };
+  var values = { class_id: class_id, worker_id: worker_id, time: date, type: type };
   // Insert into MySQL
   var query = connection.query('INSERT INTO candb.worker_attendance SET ?', values, function(err, result) {
   if (err){ 
@@ -216,8 +221,11 @@ exports.class_participant_attendance_update = function(req, res){
   var participant_id = req.params.participant_id;
   var req_data = req.body;
 
-  var timestamp = req_data.timestamp;
   var type;
+
+  var date = new Date();
+  date.setHours(req_data.hour);
+  date.setMinutes(req_data.minute);
 
   if(req_data.type == "signin"){
     type = 1;
@@ -227,7 +235,7 @@ exports.class_participant_attendance_update = function(req, res){
   }
 
   // Prepare user data for DB insert 
-  var values = { class_id: class_id, participant_id: participant_id, time: timestamp, type: type };
+  var values = { class_id: class_id, participant_id: participant_id, time: date, type: type };
   // Update MySQL
   var query = connection.query('UPDATE candb.participant_attendance SET ? WHERE class_id = ? AND participant_id = ? AND type = ?', [values, class_id, participant_id, type], function(err, result) {
   if (err){ 
@@ -249,7 +257,13 @@ exports.class_worker_attendance_update = function(req, res){
   var worker_id = req.params.worker_id;
   var req_data = req.body;
 
-  var timestamp = req_data.timestamp;
+  // we don't care about the actual date, just the hours/minutes
+  var date = new Date();
+  date.setHours(req_data.hour);
+  date.setMinutes(req_data.minute);
+
+  console.log(date);
+
   var type;
   
   if(req_data.type == "signin"){
@@ -260,7 +274,7 @@ exports.class_worker_attendance_update = function(req, res){
   }
 
   // Prepare user data for DB insert 
-  var values = { class_id: class_id, worker_id: worker_id, time: timestamp, type: type };
+  var values = { class_id: class_id, worker_id: worker_id, time: date, type: type };
   // Update MySQL
   var query = connection.query('UPDATE candb.worker_attendance SET ? WHERE class_id = ? AND worker_id = ? AND type = ?', [values, class_id, worker_id, type], function(err, result) {
   if (err){ 

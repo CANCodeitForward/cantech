@@ -18,14 +18,37 @@ cantechControllers.controller('WorkerCtrl', ['$scope', '$http', '$routeParams', 
         $http.get('/api/class/' + $routeParams.id + "/worker_registration").success(function (data) {
             $scope.volunteers = $filter('filter')(data.results, function(worker) { return worker.type == "Volunteer"; })
             $scope.staff = $filter('filter')(data.results, function(worker) { return worker.type == "Staff"; })
+
             $timeout(function () { // You might need this timeout to be sure its run after DOM render.
                 $('.time-picker').each(function(index, elem) {
                     var picker = $(elem).pickatime({
                         interval: 5
                     });
-                    picker.pickatime('set', 'select', $(elem).attr('value'), {format: 'H:mm'});
+                    if ($(elem).data('hour') !== "") {
+                        picker.pickatime('picker').set('select', [$(elem).data('hour'), $(elem).data('minute')]);
+                    }
+                    $(elem).change(function(e) {
+                        var time = $(this).pickatime('picker').get('select');
+                        var workerId = $(this).data('workerId');
+                        var type = $(this).data('type');
+                        var hour = time.hour;
+                        var mins = time.mins;
+                        var url = '/api/class/' + $routeParams.id + '/attendance_worker/' + workerId;
+                        var postData = {
+                            type: type,
+                            hour: hour,
+                            minute: mins
+                        };
+
+                        if ($(elem).data('has-been-set')) {
+                            $http.patch(url, postData);
+                        } else {
+                            $http.post(url, postData);
+                        }
+                        $(elem).data('edited-once', true);
+                    });
                 })
-            }, 1, false);
+            }, 0, false);
         });
     }]);
 
@@ -42,6 +65,26 @@ cantechControllers.controller('ParticipantCtrl', ['$scope', '$http', '$routePara
                     if ($(elem).data('hour') !== "") {
                         picker.pickatime('picker').set('select', [$(elem).data('hour'), $(elem).data('minute')]);
                     }
+                    $(elem).change(function(e) {
+                        var time = $(this).pickatime('picker').get('select');
+                        var participantId = $(this).data('participantId');
+                        var type = $(this).data('type');
+                        var hour = time.hour;
+                        var mins = time.mins;
+                        var url = '/api/class/' + $routeParams.id + '/attendance_participant/' + participantId;
+                        var postData = {
+                            type: type,
+                            hour: hour,
+                            minute: mins
+                        };
+
+                        if ($(elem).data('has-been-set')) {
+                            $http.patch(url, postData);
+                        } else {
+                            $http.post(url, postData);
+                        }
+                        $(elem).data('edited-once', true);
+                    });
                 })
             }, 0, false);
         });
