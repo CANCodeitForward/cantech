@@ -4,12 +4,12 @@
 $large-breakpoint:  em-calc(1440) !default;
 
 html, body {
-  height: 100%;
+	height: 100%;
 }
 
 body {
-  font-size: 16px;
-  font-family: Roboto, sans-serif;
+	font-size: 16px;
+	font-family: Roboto, sans-serif;
 }
 
 $blue: #003D7D;
@@ -21,71 +21,83 @@ $footer-height: 80px;
 
 
 .container {
-  // used for sticky footer
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto;
-  margin-bottom: -$footer-height;
+	// used for sticky footer
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto;
+	margin-bottom: -$footer-height;
 }
 
 .row {
-  &.full-width {
-    max-width: 100% !important;
-    .row{
-      margin: 0 auto;
-      max-width: 62.5rem;
-    }
-  }
+	&.full-width {
+		max-width: 100% !important;
+		.row{
+			margin: 0 auto;
+			max-width: 62.5rem;
+		}
+	}
 }
 
 @mixin sidebar-border {
-  border: 1px solid $grey;
-  border-top: none;
-  border-left: none;
+	border: 1px solid $grey;
+	border-top: none;
+	border-left: none;
 }
 
 .sidebar {
-  .coach-avatar {
-    clear: both;
-    @include sidebar-border;
+	.coach-avatar {
+		clear: both;
+		@include sidebar-border;
 
-    .-logo {
-      float: left;
-    }
-    .-title {
-      color: $blue;
-      font-weight: bold;
-    }
-    .-log-out {
-      color: $green;
-    }
-  }
+		.-logo {
+			float: left;
+		}
+		.-title {
+			color: $blue;
+			font-weight: bold;
+		}
+		.-log-out {
+			color: $green;
+		}
+	}
 
-  .session-listing {
-    @include sidebar-border;
+	.session-listing {
+		@include sidebar-border;
 
-    .-title {
-      color: $blue;
-      font-weight: bold;
-    }
-    .-dates {
-      color: $grey;
-    }
-  }
+		.-title {
+			color: $blue;
+			font-weight: bold;
+		}
+		.-dates {
+			color: $grey;
+		}
+	}
 }
 
 .main-display {
-  text-align: center;
-  .can-logo-splash {
-    margin: 200px auto 0;
-  }
+	text-align: center;
+	.can-logo-splash {
+		margin: 200px auto 0;
+	}
+	.-title {
+		color: $blue;
+		font-weight: bold;
+		text-align: left;
+	}
+	.-sub-heading {
+		font-weight: bold;
+		color: $green;
+		font-size: 12px;
+		text-align: left;
+		padding-bottom: 20px;
+	}
 }
 
 .footer, .footer-push {
-  height: $footer-height;
+	height: $footer-height;
 }
 
 .nav-footer {
-  text-align: center;
+	text-align: center;
 }
