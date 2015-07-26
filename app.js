@@ -52,6 +52,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
+app.get('/logout', authUser, routes.logout_user);
 app.get('/api/sessions', authUser, api.sessions);
 app.get('/api/class/:classid/worker_registration', authUser, api.class_worker_registrations);
 app.get('/api/class/:classid/participant_registration', authUser, api.class_participant_registrations);
