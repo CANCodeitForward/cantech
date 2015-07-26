@@ -10,22 +10,16 @@ cantechControllers.controller('NavCtrl', ['$scope', '$http',
         });
     }]);
 
-cantechControllers.controller('ClassCtrl', ['$scope', '$http', '$routeParams',
+cantechControllers.controller('WorkersCtrl', ['$scope', '$http', '$routeParams',
     function ($scope, $http, $routeParams) {
-        //$http.get('sessions').success(function (data) {
-        //    $scope.sessions = data.results;
-        //});
-        if ($routeParams.id) {
-            $scope.class = 'hi';
-        }
+        $http.get('sessions').success(function (data) {
+            $scope.sessions = data.results;
+        });
     }]);
+
+
 
 cantechControllers.controller('FooterCtrl', ['$scope', '$http', '$routeParams',
     function ($scope, $http, $routeParams) {
-        //$http.get('sessions').success(function (data) {
-        //    $scope.sessions = data.results;
-        //});
-        if ($routeParams.id) {
-            $scope.class = 'hi';
-        }
+        $scope.route = $routeParams;
     }]);
