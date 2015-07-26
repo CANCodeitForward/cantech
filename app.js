@@ -46,19 +46,19 @@ if ('production' == app.get('env')) {
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-}  
+}
 
 // Index Page
 app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
-app.get('/sessions', routes.sessions);
+app.get('/api/sessions', authUser, api.sessions);
 app.get('/api/class/:classid/worker_registration', authUser, api.class_worker_registrations);
 app.get('/api/class/:classid/participant_registration', authUser, api.class_participant_registrations);
-app.post('/class/:id/attendance_participant/:participant_id', routes.class_participant_attendance);
-app.post('/class/:id/attendance_worker/:worker_id', routes.class_worker_attendance);
-app.patch('/class/:id/attendance_participant/:participant_id', routes.class_participant_attendance_update);
-app.patch('/class/:id/attendance_worker/:worker_id', routes.class_worker_attendance_update);
+app.post('/api/class/:id/attendance_participant/:participant_id', authUser, api.class_participant_attendance);
+app.post('/api/class/:id/attendance_worker/:worker_id', authUser, api.class_worker_attendance);
+app.patch('/api/class/:id/attendance_participant/:participant_id', authUser, api.class_participant_attendance_update);
+app.patch('/api/class/:id/attendance_worker/:worker_id', authUser, api.class_worker_attendance_update);
 
 // Create server
 http.createServer(app).listen(3000, function(){
