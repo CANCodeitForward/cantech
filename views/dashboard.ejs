@@ -8,10 +8,10 @@
 <div class="container">
     <div class="row full-width">
         <!-- read this for the grid: http://foundation.zurb.com/docs/components/grid.html -->
-        <ng-include src="'/views/sidebar.html'"></ng-include>
+        <ng-include src="'/partials/sidebar.html'"></ng-include>
         <div class="large-8 columns main">
             <div class="row main-display">
-                <img src="/images/can-logo.png" class="can-logo-splash">
+                <div ng-view></div>
             </div>
         </div>
     </div>

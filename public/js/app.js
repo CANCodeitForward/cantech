@@ -7,17 +7,14 @@ var cantechApp = angular.module('cantechApp', [
 ]);
 
 cantechApp.config(['$routeProvider',
-    function($routeProvider) {
+    function ($routeProvider) {
         $routeProvider.
-            when('/phones', {
-                templateUrl: 'partials/phone-list.html',
-                controller: 'PhoneListCtrl'
+            when('/classes/:id', {
+                templateUrl: 'partials/class.html',
+                controller: 'ClassCtrl'
             }).
-            when('/phones/:phoneId', {
-                templateUrl: 'partials/phone-detail.html',
-                controller: 'PhoneDetailCtrl'
-            }).
-            otherwise({
-                redirectTo: '/phones'
-            });
+            when('/', {
+                templateUrl: 'partials/splash.html',
+                controller: 'ClassCtrl'
+            })
     }]);
