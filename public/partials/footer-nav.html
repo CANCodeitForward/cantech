@@ -1,12 +1,11 @@
-<div class="columns large-4"></div>
-<div class="columns large-8 nav-footer" ng-controller="FooterCtrl">
-    <div class="columns large-4">
+<div class="columns large-offset-4 large-8 nav-footer" ng-controller="FooterCtrl">
+    <div class="columns large-4 small-4">
         <a ng-href="{{ route.id ? '#/classes/' + route.id + '/workers' : '#/' }}"><img src="/images/workers.png"></a>
     </div>
-    <div class="columns large-4">
+    <div class="columns large-4 small-4">
         <a ng-href="{{ route.id ? '#/classes/' + route.id + '/participants' : '#/' }}"><img src="/images/participants.png"></a>
     </div>
-    <div class="columns large-4">
+    <div class="columns large-4 small-4">
         <!-- TODO: hack for width here, need real image -->
         <a ng-href="{{ route.id ? '#/classes/' + route.id + '/reports' : '#/' }}"><img src="/images/reports.png" width="80px"></a>
     </div>
