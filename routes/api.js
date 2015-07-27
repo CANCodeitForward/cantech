@@ -10,6 +10,10 @@ var ejs = require('ejs');
 var fs = require('fs');
 var http = require('http');
 var config = require('../config.json');
+var nodemailer = require('nodemailer');
+var json2csv = require('json2csv');
+
+
 
 // MySQL Config
 var connection = mysql.createConnection({
@@ -19,6 +23,7 @@ var connection = mysql.createConnection({
 });
 
 exports.sessions = function(req, res){
+  req.session.worker_id = 1;
   var worker_id = req.session.worker_id;
   // First get all the sessions to which the current worker has been assigned
   var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue FROM candb.session INNER JOIN candb.worker_registration ON session.id = worker_registration.session_id WHERE worker_registration.worker_id = ' + worker_id + ' ORDER BY session_id;';
@@ -284,4 +289,87 @@ exports.class_worker_attendance_update = function(req, res){
     res.json({"message": "Attendance complete!", "results": result}, 200);
   }});
 
+};
+
+exports.submit_report = function (req, res) {
+  var class_id = req.params.id;
+  var transporter = nodemailer.createTransport();
+
+  console.log(JSON.stringify(req.body, null, 2));
+
+  var workerAttendance = req.body.workerAttendance.results;
+  var workerAttendanceFormatted = workerAttendance.map(function(elem) {
+    return {
+      firstName: elem.first_name,
+      lastName: elem.last_name,
+      signIn: elem.attendance && elem.attendance.signin ? elem.attendance.signin["time"] : null,
+      signOut: elem.attendance && elem.attendance.signout ? elem.attendance.signout["time"] : null
+    };
+  });
+
+
+
+  json2csv({
+    data: workerAttendanceFormatted,
+    fields: ["firstName", "lastName", "signIn", "signOut"]
+  }, function(err, workerCsv) {
+
+    var particpantAttendance = req.body.participantAttendance.results;
+    var particpantAttendanceFormatted = particpantAttendance.map(function (elem) {
+      return {
+        firstName: elem.first_name,
+        lastName: elem.last_name,
+        signIn: elem.attendance && elem.attendance.signin ? elem.attendance.signin["time"] : null,
+        signOut: elem.attendance && elem.attendance.signout ? elem.attendance.signout["time"] : null
+      };
+    });
+
+
+    json2csv({
+      data: particpantAttendanceFormatted,
+      fields: ["firstName", "lastName", "signIn", "signOut"]
+    }, function (err, participantCsv) {
+
+      transporter.sendMail({
+        from: 'lkysow@gmail.com',
+        to: 'lkysow@gmail.com',
+        subject: 'Report for session ',
+        text: 'hello world!',
+        attachments: [
+          {
+            filename: "workers.csv",
+            content: workerCsv,
+            contentType: "text/csv"
+          },
+          {
+            filename: "participants.csv",
+            content: participantCsv,
+            contentType: "text/csv"
+          }
+        ]
+      }, function (err, info) {
+        console.log(err);
+        console.log(JSON.stringify(info));
+      });
+
+
+    });
+
+    //var query = connection.query('select session.name, class.date from candb.session inner join candb.class on class.session_id = session.id where class.id = ?', [class_id], function (err, result) {
+    //  if (err) {
+    //    console.log('Class stuff failed sorry');
+    //    res.json(500, {message: 'Something really went wrong!'});
+    //  } else {
+    //    var classname = res[0].name;
+    //    var date = res[0].date;
+    //
+    //    var sql = 'select participant_attendance.participant_id, participant_attendance.time, participant_attendance.type from candb.participant_attendance where participant_attendance.class_id = ' + classid + ' ORDER BY participant_id;';
+    //
+    //  }
+    //});
+
+  });
+
+
+  res.json({"message": "success!"});
 };

@@ -6730,4 +6730,11 @@ body {
 .nav-footer {
   text-align: center; }
 
+.report {
+  text-align: left; }
+  .report textarea {
+    height: 80px; }
+  .report .-incident-count {
+    width: 50px; }
+
 /*# sourceMappingURL=main.css.map */

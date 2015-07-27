@@ -58,6 +58,7 @@ app.get('/api/class/:classid/worker_registration', authUser, api.class_worker_re
 app.get('/api/class/:classid/participant_registration', authUser, api.class_participant_registrations);
 app.post('/api/class/:id/attendance_participant/:participant_id', authUser, api.class_participant_attendance);
 app.post('/api/class/:id/attendance_worker/:worker_id', authUser, api.class_worker_attendance);
+app.post('/api/class/:id/submit_report', authUser, api.submit_report);
 app.patch('/api/class/:id/attendance_participant/:participant_id', authUser, api.class_participant_attendance_update);
 app.patch('/api/class/:id/attendance_worker/:worker_id', authUser, api.class_worker_attendance_update);
 
