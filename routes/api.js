@@ -23,7 +23,6 @@ var connection = mysql.createConnection({
 });
 
 exports.sessions = function(req, res){
-  req.session.worker_id = 1;
   var worker_id = req.session.worker_id;
   // First get all the sessions to which the current worker has been assigned
   var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue FROM candb.session INNER JOIN candb.worker_registration ON session.id = worker_registration.session_id WHERE worker_registration.worker_id = ' + worker_id + ' ORDER BY session_id;';
@@ -329,12 +328,14 @@ exports.submit_report = function (req, res) {
       data: particpantAttendanceFormatted,
       fields: ["firstName", "lastName", "signIn", "signOut"]
     }, function (err, participantCsv) {
+      var classname = "I CAN Basketball";
+      var date = "July 26th 2015";
 
       transporter.sendMail({
         from: 'lkysow@gmail.com',
         to: 'lkysow@gmail.com',
-        subject: 'Report for session ',
-        text: 'hello world!',
+        subject: 'Report for class ' + classname + " on " + date,
+        text: 'Report for class ' + classname + " on " + date,
         attachments: [
           {
             filename: "workers.csv",
@@ -351,23 +352,7 @@ exports.submit_report = function (req, res) {
         console.log(err);
         console.log(JSON.stringify(info));
       });
-
-
     });
-
-    //var query = connection.query('select session.name, class.date from candb.session inner join candb.class on class.session_id = session.id where class.id = ?', [class_id], function (err, result) {
-    //  if (err) {
-    //    console.log('Class stuff failed sorry');
-    //    res.json(500, {message: 'Something really went wrong!'});
-    //  } else {
-    //    var classname = res[0].name;
-    //    var date = res[0].date;
-    //
-    //    var sql = 'select participant_attendance.participant_id, participant_attendance.time, participant_attendance.type from candb.participant_attendance where participant_attendance.class_id = ' + classid + ' ORDER BY participant_id;';
-    //
-    //  }
-    //});
-
   });
 
 
