@@ -90,6 +90,38 @@ cantechControllers.controller('ParticipantCtrl', ['$scope', '$http', '$routePara
         });
     }]);
 
+var serializeObj = function(elem) {
+    var o = {};
+    var a = $(elem).serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+cantechControllers.controller('ReportsCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+    $scope.submit = function () {
+        var result = window.confirm("Are you sure you want to submit this report and attendance for this class?");
+
+        $http.get('/api/class/' + $routeParams.id + "/worker_registration").success(function (workerData) {
+
+            $http.get('/api/class/' + $routeParams.id + "/participant_registration").success(function (participantData) {
+                var report = serializeObj('.report');
+                report.workerAttendance = workerData;
+                report.participantAttendance = participantData;
+                $http.post('/api/class/' + $routeParams.id + '/submit_report', report);
+            });
+        });
+    };
+}]);
+
 
 
 cantechControllers.controller('FooterCtrl', ['$scope', '$http', '$routeParams',

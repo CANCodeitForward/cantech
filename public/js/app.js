@@ -17,9 +17,9 @@ cantechApp.config(['$routeProvider',
                 templateUrl: 'partials/participants.html',
                 controller: 'ParticipantCtrl'
             }).
-            when('/classes/:id/report', {
+            when('/classes/:id/reports', {
                 templateUrl: 'partials/report.html',
-                controller: 'ReportCtrl'
+                controller: 'ReportsCtrl'
             }).
             when('/', {
                 templateUrl: 'partials/splash.html',

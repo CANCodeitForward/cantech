@@ -176,3 +176,13 @@ $footer-height: 80px;
 .nav-footer {
 	text-align: center;
 }
+
+.report {
+  text-align: left;
+  textarea {
+	height: 80px;
+  }
+  .-incident-count {
+	width: 50px;
+  }
+}

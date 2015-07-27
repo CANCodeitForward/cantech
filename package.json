@@ -8,9 +8,11 @@
   "dependencies": {
     "ejs": "*",
     "express": "3.4.7",
+    "json2csv": "^2.8.2",
     "mysql": "^2.6.2",
+    "nodemailer": "^1.4.0",
     "request": "^2.55.0",
-    "stylus": "*",
-    "sanitizer": "^0.1.1"
+    "sanitizer": "^0.1.1",
+    "stylus": "*"
   }
 }

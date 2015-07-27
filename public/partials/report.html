@@ -1,0 +1,36 @@
+<form class="report">
+    <div class="row">
+        <div class="-sub-heading">Class Report</div>
+        <div class="columns large-8 large-offset-2">
+            <label>Needs
+                <div class="large-12 columns">
+                    <textarea name="needs"></textarea>
+                </div>
+            </label>
+
+            <label>Facility Concerns
+                <div class="large-12 columns">
+                    <textarea name="facility_concerns"></textarea>
+                </div>
+            </label>
+
+            <label>Staff/Volunteer Concerns
+                <div class="large-12 columns">
+                    <textarea name="worker_concerns"></textarea>
+                </div>
+            </label>
+
+            <label>Participant Concerns
+                <div class="large-12 columns">
+                    <textarea name="participant_concerns"></textarea>
+                </div>
+            </label>
+
+            <label>Number of incident reports (sent separately)
+                <input class="-incident-count" name="incidents" type="number" value="0">
+            </label>
+
+            <a ng-click="submit()" class="button success">Submit Report And Attendance</a>
+        </div>
+    </div>
+</form>
