@@ -12,23 +12,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<div class="container">
-    <div class="row full-width">
-        <!-- read this for the grid: http://foundation.zurb.com/docs/components/grid.html -->
-        <ng-include src="'/partials/sidebar.html'"></ng-include>
-        <div class="large-8 columns main">
-            <div class="row main-display">
-                <div ng-view></div>
-            </div>
+<div class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+        <a class="off-canvas-toggle" href="#">Menu</a>
+        <aside class="off-canvas-menu">
+            <ng-include src="'/partials/sidebar.html'"></ng-include>
+        </aside>
+        <div class="main-content">
+            <div ng-view></div>
         </div>
+        <a class="exit-off-canvas"></a>
+        <!--footer-push is used for the sticky footer-->
+        <div class="footer-push"></div>
     </div>
-    <!-- footer-push is used for the sticky footer -->
-    <div class="footer-push"></div>
-</div>
 
-<div class="footer">
-    <div class="row">
-        <ng-include src="'/partials/footer-nav.html'"></ng-include>
+    <div class="footer">
+        <div class="row">
+            <ng-include src="'/partials/footer-nav.html'"></ng-include>
+        </div>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js"></script>
@@ -36,8 +37,28 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-resource.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="js/app.js"></script>
+<script src="bower_components/foundation/js/foundation.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/picker.js"></script>
 <script src="js/picker.time.js"></script>
+<script>
+    // TODO: move this to better location
+    $(document).foundation({
+        offcanvas : {
+            // Sets method in which offcanvas opens.
+            // [ move | overlap_single | overlap ]
+            open_method: 'move',
+            // Should the menu close when a menu link is clicked?
+            // [ true | false ]
+            close_on_click : false
+        }
+    });
+    $(function() {
+        $('.off-canvas-toggle').click(function() {
+            $('.off-canvas-wrap').foundation('offcanvas', 'toggle', 'move-right');
+            return false;
+        });
+    });
+</script>
 </body>
 </html>

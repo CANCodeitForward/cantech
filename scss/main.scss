@@ -1,15 +1,41 @@
 @import "foundation";
 
+
+@media #{$small-only} {
+  .off-canvas-menu {
+    @include off-canvas-menu('left')
+  }
+}
+
+@media #{$medium-up} {
+  .inner-wrap {
+    @include grid-row()
+  }
+  .off-canvas-menu {
+    @include grid-column(4)
+  }
+  .main-content {
+    @include grid-column(8)
+  }
+  .off-canvas-toggle {
+    display: none;
+  }
+}
+
+.off-canvas-menu {
+  background-color: $white;
+}
+
 // foundation overrides
-$large-breakpoint:  em-calc(1440) !default;
+$large-breakpoint: em-calc(1440) !default;
 
 html, body {
-	height: 100%;
+  height: 100%;
 }
 
 body {
-	font-size: 16px;
-	font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
 }
 
 $blue: #003D7D;
@@ -19,170 +45,169 @@ $grey: #919191;
 
 $footer-height: 80px;
 
-
 .container {
-	// used for sticky footer
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto;
-	margin-bottom: -$footer-height;
+  // used for sticky footer
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto;
+  margin-bottom: -$footer-height;
 }
 
 .background-overlay {
-	background: linear-gradient(rgba(0, 0, 0, 0.45),rgba(136, 141, 189, 0.6)), url("/images/bg.jpg");
-	background-size: 100%;
-	background-repeat: no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(136, 141, 189, 0.6)), url("/images/bg.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 .row {
-	&.full-width {
-		max-width: 100% !important;
-		.row{
-			margin: 0 auto;
-			max-width: 62.5rem;
-		}
-	}
+  &.full-width {
+    max-width: 100% !important;
+    .row {
+      margin: 0 auto;
+      max-width: 62.5rem;
+    }
+  }
 }
 
 @mixin sidebar-border {
-	border: 1px solid $grey;
-	border-top: none;
-	border-left: none;
+  border: 1px solid $grey;
+  border-top: none;
+  border-left: none;
 }
 
 .sidebar {
-	.coach-avatar {
-		clear: both;
-		@include sidebar-border;
+  .coach-avatar {
+    clear: both;
+    @include sidebar-border;
 
-		.-logo {
-			float: left;
-		}
-		.-title {
-			margin-top: 20px;
-			color: $blue;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		.-log-out {
-			font-size: 14px;
-		}
-		.-log-out a{
-			color: $green;
-			font-weight: bold;
-		}
-	}
+    .-logo {
+      float: left;
+    }
+    .-title {
+      margin-top: 20px;
+      color: $blue;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .-log-out {
+      font-size: 14px;
+    }
+    .-log-out a {
+      color: $green;
+      font-weight: bold;
+    }
+  }
 
-	.session-listing {
-		@include sidebar-border;
-		padding-left: 50px;
-		padding-top: 5px;
-		padding-bottom: 5px;
+  .session-listing {
+    @include sidebar-border;
+    padding-left: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 
-		.-title {
-			color: $blue;
-			font-weight: bold;
-		}
-		.-title a{
-			color: $blue;
-			font-weight: bold;
-		}
-		.-dates {
-			color: $grey;
-			line-height: 0.9em;
-		}
-		.-venue {
-			color: $grey;
-		}
-		.-classes-dates {
-			font-size: 14px;
-		}
-		.-classes {
-			display: none;
+    .-title {
+      color: $blue;
+      font-weight: bold;
+    }
+    .-title a {
+      color: $blue;
+      font-weight: bold;
+    }
+    .-dates {
+      color: $grey;
+      line-height: 0.9em;
+    }
+    .-venue {
+      color: $grey;
+    }
+    .-classes-dates {
+      font-size: 14px;
+    }
+    .-classes {
+      display: none;
 
-			&.x-show {
-				display: block;
-			}
-		}
-	}
+      &.x-show {
+        display: block;
+      }
+    }
+  }
 }
 
 .login-form {
-	margin: 0px auto;
-    margin-top: 135px;
-    padding: 40px;
-    max-width: 40%;
-    background-color: white;
-	.-login-button{
-			margin-top: 10px;
-		    outline-style: solid;
-		    outline-color: #003D7D;
-		    outline-offset: 5px;
-		    outline-width: 10px;
-		    width: 92.5%;
-		    background-color: $green;
-	}
+  margin: 0px auto;
+  margin-top: 135px;
+  padding: 40px;
+  max-width: 40%;
+  background-color: white;
+  .-login-button {
+    margin-top: 10px;
+    outline-style: solid;
+    outline-color: #003D7D;
+    outline-offset: 5px;
+    outline-width: 10px;
+    width: 92.5%;
+    background-color: $green;
+  }
 }
 
 .main-display {
-	text-align: center;
-	.can-logo-splash {
-		margin: 200px auto 0;
-	}
-	.-title {
-		margin-top: 20px;
-		color: $blue;
-		font-weight: bold;
-		text-align: left;
-		font-size: 20px;
-		padding-left: 11px;
-	}
-	.-sub-heading {
-		font-weight: bold;
-		color: $green;
-		font-size: 14px;
-		text-align: left;
-		padding-bottom: 4px;
-		padding-left: 11px;
-	}
-	.table-header {
-		color: $blue;
-		font-weight: bold;
-		text-align: left;
-		font-size: 16px;
-		padding-bottom: 10px;
-		    padding-left: 11px;
-	}
-	.content-table {
-		border: none;
-	}
-	.table-heading {
-		font-size: 16px;
-	}
-	.table-content td{
-		padding: 5px;
-	}
+  text-align: center;
+  .can-logo-splash {
+    margin: 200px auto 0;
+  }
+  .-title {
+    margin-top: 20px;
+    color: $blue;
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+    padding-left: 11px;
+  }
+  .-sub-heading {
+    font-weight: bold;
+    color: $green;
+    font-size: 14px;
+    text-align: left;
+    padding-bottom: 4px;
+    padding-left: 11px;
+  }
+  .table-header {
+    color: $blue;
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+    padding-bottom: 10px;
+    padding-left: 11px;
+  }
+  .content-table {
+    border: none;
+  }
+  .table-heading {
+    font-size: 16px;
+  }
+  .table-content td {
+    padding: 5px;
+  }
 }
 
 .login-messages {
-	display: none;
+  display: none;
 }
 
 .footer, .footer-push {
-	height: $footer-height;
+  height: $footer-height;
 }
 
 .nav-footer {
-	text-align: center;
+  text-align: center;
 }
 
 .report {
   text-align: left;
   textarea {
-	height: 80px;
+    height: 80px;
   }
   .-incident-count {
-	width: 50px;
+    width: 50px;
   }
 }
