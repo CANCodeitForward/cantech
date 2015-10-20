@@ -19,10 +19,10 @@ var connection = mysql.createConnection({
 });
 
 exports.index = function(req, res){
-    if (req.session.worker_id) {
-    res.render('dashboard');
-  } else {
-    res.render('login');
+    if(req.session.user_type){
+        res.render('dashboard');
+    }else {
+        res.render('login');
   }
 };
 
@@ -58,12 +58,17 @@ exports.login_user = function(req, res){
          if (result.length === 0) {
             res.json({"message": "User doesn't exists!", valid: false}, 404);
          } else {
-            // Set user id
-            var user_id = result[0].id;
-            // Worker id in Session
-            req.session.worker_id = result[0].worker_id;
+
+            console.log(result);
+
             // Save User ID in Session
-            req.session.user_id = user_id;
+            req.session.user_id = result[0].id;;
+            // Staff id in Session
+            req.session.staff_id = result[0].staff_id;
+            // Volunteer ID in session
+            req.session.volunteer_id = result[0].volunteer_id;
+            // User Type in session
+            req.session.user_type = result[0].type;
             // Save User Email in Session 
             req.session.email = email;
             // Return to view

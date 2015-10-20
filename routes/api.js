@@ -23,25 +23,35 @@ var connection = mysql.createConnection({
 });
 
 exports.sessions = function(req, res){
-  var worker_id = req.session.worker_id;
-  // First get all the sessions to which the current worker has been assigned
-  var sql = 'SELECT session.id as session_id, name as session_name, start_date as session_start_date, end_date as session_end_date, venue as session_venue FROM candb.session INNER JOIN candb.worker_registration ON session.id = worker_registration.session_id WHERE worker_registration.worker_id = ' + worker_id + ' ORDER BY session_id;';
+  var user_id = req.session.user_id;
+  var user_type = req.session.user_type;
+  var staff_id = req.session.staff_id;
+  var volunteer_id = req.session.volunteer_id;
+  var sql = null;
+
+  if(user_type == "staff"){
+    sql = 'SELECT staff_session.session_id as session_id FROM candb.staff_session WHERE staff_session.staff_id = ' + staff_id + ';';
+  }else {
+    sql = 'SELECT volunteer_session.session_id as session_id FROM candb.volunteer_session WHERE volunteer_session.volunteer_id = ' + volunteer_id + ';';
+  }
+
+  // First get all sessions that are assgined to the staff or volunteer
   var query = connection.query(sql, function(err, result) {   
     if (err) { 
       console.log(err);
       res.json({"message": "Something went wrong!", "results": null}, 500); 
     } else {
       if (result.length === 0) {
-        res.json({"message": "No sessions or classes", "results": null}, 404); 
+        res.json({"message": "No sessions or classes for " + user_type + " and staff_id " + staff_id + " : volunteer_id " + volunteer_id, "results": null}, 404); 
       } else {
         var session_ids = result.map(function(value) {
           return value.session_id;
         });
-        console.log('just session ids: ' + JSON.stringify(session_ids));
-        console.log(result);
+
         // Manually stitch the classes for those sessions because we do not want duplicate session information
-        sql = 'SELECT class.id AS class_id, class.date as class_date, class.session_id FROM candb.session INNER JOIN candb.class ON class.session_id = session.id WHERE session.id IN (' + session_ids.join(',') + ');';
+        sql = 'SELECT Session.id as session_id, Session.name as session_name, Session.datetime_start as session_start_date, Session.datetime_end as session_end_date, Session.description as session_description, Class.id AS class_id, Class.datetime_start as class_start_date, Class.datetime_end as class_end_date, Class.session_id, Venue.name as session_venue FROM candb_main.Session INNER JOIN candb_main.Class ON Class.session_id = Session.id INNER JOIN candb_main.Venue on Class.venue_id = Venue.id WHERE Session.id IN (' + session_ids.join(',') + ');';
         var query2 = connection.query(sql, function(err, result2) {
+
           result.forEach(function (currentValue) {
             currentValue.classes = result2.filter(function matchingSession(filterValue) {
              return filterValue.session_id == currentValue.session_id;
@@ -55,19 +65,23 @@ exports.sessions = function(req, res){
   });
 };
 
-// TODO: refactor class_worker_registrations and class_participant_registrations functions into closure
+// Route to get all staff members registration and attendance info
+exports.session_staff_registrations = function(req, res){
 
-exports.class_worker_registrations = function(req, res){
-
+  var sessionid = req.params.sessionid;
+  console.log('sessionid: ' + sessionid);
   var classid = req.params.classid;
   console.log('classid: ' + classid);
 
+  if(!sessionid){
+    res.json({ "message": "sessionid cannot be empty!", "status": "error"}, 404);
+  }
   if(!classid){
     res.json({ "message": "classid cannot be empty!", "status": "error"}, 404);
   }
 
-  // This SQL query returns all the workers who are registered for a particular class
-  var sql = 'select session.name, class.id as class_id, class.session_id, worker_registration.worker_id, worker.first_name, worker.last_name, worker.email_address, worker.type from (candb.worker_registration inner join (candb.class inner join candb.session on class.session_id = session.id) on worker_registration.session_id = class.session_id) inner join candb.worker on worker_registration.worker_id = worker.id where class.id = ' + classid +' ORDER BY worker.last_name;'
+  // This SQL query returns all the staff members who are registered for a particular class
+  var sql = 'SELECT staff.id as staff_id, staff.email, staff.first_name, staff.last_name, staff.phone_number FROM candb.staff INNER JOIN candb.staff_session ON staff_session.staff_id = staff.id WHERE staff_session.session_id =' + sessionid +';';
   var query = connection.query(sql, function(err, result) {   
     if (err) {
       console.log(err);
@@ -76,24 +90,20 @@ exports.class_worker_registrations = function(req, res){
       if (result.length === 0) {
         res.json({"message": "No registrations found", "results": null}, 404);
       } else {
-        console.log(result);
         // This SQL query returns all the workers who have signed in and signed out
-        sql = 'select worker_attendance.worker_id, worker_attendance.time, worker_attendance.type from candb.worker_attendance where worker_attendance.class_id = ' + classid + ' ORDER BY worker_id;';
+        sql = 'SELECT staff_attendance.staff_id, staff_attendance.signin_time, staff_attendance.signout_time FROM candb.staff_attendance WHERE staff_attendance.class_id = ' + classid + ' ORDER BY staff_id;';
         var query2 = connection.query(sql, function(err, result2) {
           // We manually stitch the two results together because the two existing SQL queries are complicated enough
           result.forEach(function (currentValue) {
             var attendanceRecords = result2.filter(function matchingWorkers(filterValue) {
-              return filterValue.worker_id == currentValue.worker_id;
+              return filterValue.staff_id == currentValue.staff_id;
             });
 
             currentValue.attendance = {};
             attendanceRecords.forEach(function(record) {
-              if (record.type == 0) {
-                currentValue.attendance.signout = record;
-              } else {
-                currentValue.attendance.signin = record;
-              }
+                currentValue.attendance = record;
             });
+
           });
           // Return to view
           res.json({"message": "Successfully gathered registrations and attendance", "results": result}, 200);
@@ -103,43 +113,93 @@ exports.class_worker_registrations = function(req, res){
   });
 };
 
-exports.class_participant_registrations = function(req, res){
+// Route to get all volunteer registration and attendance info
+exports.session_volunteer_registrations = function(req, res){
 
+  var sessionid = req.params.sessionid;
+  console.log('sessionid: ' + sessionid);
   var classid = req.params.classid;
   console.log('classid: ' + classid);
 
+  if(!sessionid){
+    res.json({ "message": "sessionid cannot be empty!", "status": "error"}, 404);
+  }
   if(!classid){
     res.json({ "message": "classid cannot be empty!", "status": "error"}, 404);
   }
 
-  // This SQL query returns all the participants who are registered for a particular class
-  var sql = 'select session.name, class.id as class_id, class.session_id, participant_registration.participant_id, participant.first_name, participant.last_name, participant.email_address from (candb.participant_registration inner join (candb.class inner join candb.session on class.session_id = session.id) on participant_registration.session_id = class.session_id) inner join candb.participant on participant_registration.participant_id = participant.id where class.id = ' + classid +' ORDER BY participant.last_name;'
+  // This SQL query returns all the volunteers who are registered for a particular class
+  var sql = 'SELECT volunteer.id as volunteer_id, volunteer.email, volunteer.first_name, volunteer.last_name, volunteer.phone_number FROM candb.volunteer INNER JOIN candb.volunteer_session ON volunteer_session.volunteer_id = volunteer.id WHERE volunteer_session.session_id =' + sessionid +';';
   var query = connection.query(sql, function(err, result) {   
     if (err) {
       console.log(err);
-      res.json({"message": "Something went wrong!", "results": null}, 500); 
+      res.json({"message": "Something went wrong!", "results": null}, 500);
     } else {
       if (result.length === 0) {
-        res.json({"message": "No registrations found", "results": null}, 404); 
+        res.json({"message": "No registrations found", "results": null}, 404);
       } else {
-        console.log(result);
-        // This SQL query returns all the participants who have signed in and signed out
-        sql = 'select participant_attendance.participant_id, participant_attendance.time, participant_attendance.type from candb.participant_attendance where participant_attendance.class_id = ' + classid + ' ORDER BY participant_id;';
+        // This SQL query returns all the workers who have signed in and signed out
+        sql = 'SELECT volunteer_attendance.volunteer_id, volunteer_attendance.signin_time, volunteer_attendance.signout_time FROM candb.volunteer_attendance WHERE volunteer_attendance.class_id = ' + classid + ' ORDER BY volunteer_id;';
         var query2 = connection.query(sql, function(err, result2) {
           // We manually stitch the two results together because the two existing SQL queries are complicated enough
           result.forEach(function (currentValue) {
-            var attendanceRecords = result2.filter(function matchingParticipants(filterValue) {
+            var attendanceRecords = result2.filter(function matchingWorkers(filterValue) {
+              return filterValue.volunteer_id == currentValue.volunteer_id;
+            });
+
+            currentValue.attendance = {};
+            attendanceRecords.forEach(function(record) {
+                currentValue.attendance = record;
+            });
+
+          });
+          // Return to view
+          res.json({"message": "Successfully gathered registrations and attendance", "results": result}, 200);
+        });
+      }
+    }
+  });
+};
+
+// Route to get all participant registration and attendance info
+exports.session_participant_registrations = function(req, res){
+
+  var sessionid = req.params.sessionid;
+  console.log('sessionid: ' + sessionid);
+  var classid = req.params.classid;
+  console.log('classid: ' + classid);
+
+  if(!sessionid){
+    res.json({ "message": "sessionid cannot be empty!", "status": "error"}, 404);
+  }
+  if(!classid){
+    res.json({ "message": "classid cannot be empty!", "status": "error"}, 404);
+  }
+
+  // This SQL query returns all the volunteers who are registered for a particular class
+  var sql = 'SELECT User.id as participant_id, User.email_address, User.first_name, User.last_name, Phone.primary FROM candb_main.User INNER JOIN candb_main.Phone ON User.phone_id = Phone.id INNER JOIN candb_main.Registration ON User.id = Registration.user_id WHERE Registration.session_id =' + sessionid +';';
+  var query = connection.query(sql, function(err, result) {   
+    if (err) {
+      console.log(err);
+      res.json({"message": "Something went wrong!", "results": null}, 500);
+    } else {
+      if (result.length === 0) {
+        res.json({"message": "No registrations found", "results": null}, 404);
+      } else {
+        // This SQL query returns all the workers who have signed in and signed out
+        sql = 'SELECT participant_attendance.participant_id, participant_attendance.signin_time, participant_attendance.signout_time FROM candb.participant_attendance WHERE participant_attendance.class_id = ' + classid + ' ORDER BY participant_id;';
+        var query2 = connection.query(sql, function(err, result2) {
+          // We manually stitch the two results together because the two existing SQL queries are complicated enough
+          result.forEach(function (currentValue) {
+            var attendanceRecords = result2.filter(function matchingWorkers(filterValue) {
               return filterValue.participant_id == currentValue.participant_id;
             });
 
             currentValue.attendance = {};
             attendanceRecords.forEach(function(record) {
-              if (record.type == 0) {
-                currentValue.attendance.signout = record;
-              } else {
-                currentValue.attendance.signin = record;
-              }
+                currentValue.attendance = record;
             });
+
           });
           // Return to view
           res.json({"message": "Successfully gathered registrations and attendance", "results": result}, 200);

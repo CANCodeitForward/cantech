@@ -28,7 +28,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 function authUser(req, res, next) {
-  if (req.session.worker_id) {
+  if (req.session.user_type) {
     return next();
   } else {
     res.redirect('/');
@@ -53,11 +53,14 @@ app.get('/', routes.index);
 app.get('/login', routes.login);
 app.post('/login_user', routes.login_user);
 app.get('/logout', authUser, routes.logout_user);
-app.get('/api/sessions', authUser, api.sessions);
-app.get('/api/class/:classid/worker_registration', authUser, api.class_worker_registrations);
-app.get('/api/class/:classid/participant_registration', authUser, api.class_participant_registrations);
+app.get('/api/sessions', authUser, api.sessions); // DONE!
+app.get('/api/session/:sessionid/:classid/staff_registration', authUser, api.session_staff_registrations); // DONE!
+app.get('/api/session/:sessionid/:classid/volunteer_registration', authUser, api.session_volunteer_registrations); // DONE!
+app.get('/api/session/:sessionid/:classid/participant_registration', authUser, api.session_participant_registrations); // DONE!
+
 app.post('/api/class/:id/attendance_participant/:participant_id', authUser, api.class_participant_attendance);
 app.post('/api/class/:id/attendance_worker/:worker_id', authUser, api.class_worker_attendance);
+
 app.post('/api/class/:id/submit_report', authUser, api.submit_report);
 app.patch('/api/class/:id/attendance_participant/:participant_id', authUser, api.class_participant_attendance_update);
 app.patch('/api/class/:id/attendance_worker/:worker_id', authUser, api.class_worker_attendance_update);
