@@ -1,0 +1,20 @@
+{
+  "name": "cantech",
+  "version": "0.0.0",
+  "homepage": "https://github.com/CANCodeitForward/cantech",
+  "authors": [
+    "Luke Kysow <lkysow@gmail.com>"
+  ],
+  "description": "Attendance app for Canucks Autism Society",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "zurb/bower-foundation#~5.5.2"
+  }
+}

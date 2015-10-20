@@ -1,5 +1,31 @@
 @import "foundation";
 
+
+@media #{$small-only} {
+  .off-canvas-menu {
+    @include off-canvas-menu('left')
+  }
+}
+
+@media #{$medium-up} {
+  .inner-wrap {
+    @include grid-row()
+  }
+  .off-canvas-menu {
+    @include grid-column(4)
+  }
+  .main-content {
+    @include grid-column(8)
+  }
+  .off-canvas-toggle {
+    display: none;
+  }
+}
+
+.off-canvas-menu {
+  background-color: $white;
+}
+
 // foundation overrides
 $large-breakpoint: em-calc(1440) !default;
 
