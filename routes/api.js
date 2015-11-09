@@ -222,16 +222,17 @@ exports.class_participant_attendance = function(req, res){
   date.setHours(req_data.hour);
   date.setMinutes(req_data.minute);
   var type;
+  var values;
 
   if(req_data.type == "signin"){
-    type = 1;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, participant_id: participant_id, signin_time: date};
   }
   if(req_data.type == "signout"){
-    type = 0;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, participant_id: participant_id, signout_time: date};
   }
-
-  // Prepare user data for DB insert 
-  var values = { class_id: class_id, participant_id: participant_id, time: date, type: type };
+ 
   // Insert into MySQL
   var query = connection.query('INSERT INTO candb.participant_attendance SET ?', values, function(err, result) {
   if (err){ 
@@ -244,28 +245,27 @@ exports.class_participant_attendance = function(req, res){
 
 };
 
-// Request JSON data: { "type": "signin/signout", "timestamp": "2015-07-26 15:39:06" }
-// curl -H "Content-Type: application/json" -X POST -d '{ "type": "signin", "timestamp": "2015-07-26 15:39:06" }' http://localhost:3000/api/class/1/attendance_worker/1
-exports.class_worker_attendance = function(req, res){
+exports.class_staff_attendance = function(req, res){
 
   var class_id = req.params.id;
-  var worker_id = req.params.worker_id;
+  var staff_id = req.params.staff_id;
   var req_data = req.body;
 
   var date = new Date();
   date.setHours(req_data.hour);
   date.setMinutes(req_data.minute);
   var type;
+  var values;
   
   if(req_data.type == "signin"){
-    type = 1;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, staff_id: staff_id, signin_time: date};
   }
   if(req_data.type == "signout"){
-    type = 0;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, staff_id: staff_id, signout_time: date};
   }
 
-  // Prepare user data for DB insert 
-  var values = { class_id: class_id, worker_id: worker_id, time: date, type: type };
   // Insert into MySQL
   var query = connection.query('INSERT INTO candb.worker_attendance SET ?', values, function(err, result) {
   if (err){ 
@@ -277,8 +277,38 @@ exports.class_worker_attendance = function(req, res){
 
 };
 
-// Request JSON data: { "type": "signin/signout", "timestamp": "2015-07-26 15:39:06" }
-// curl -H "Content-Type: application/json" -X PATCH -d '{ "type": "signin", "timestamp": "2015-07-26 15:39:06" }' http://localhost:3000/api/class/1/attendance_participant/1
+exports.class_volunteer_attendance = function(req, res){
+
+  var class_id = req.params.id;
+  var volunteer_id = req.params.volunteer_id;
+  var req_data = req.body;
+
+  var date = new Date();
+  date.setHours(req_data.hour);
+  date.setMinutes(req_data.minute);
+  var type;
+  var values;
+  
+  if(req_data.type == "signin"){
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, volunteer_id: volunteer_id, signin_time: date};
+  }
+  if(req_data.type == "signout"){
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, volunteer_id: volunteer_id, signout_time: date};
+  }
+
+  // Insert into MySQL
+  var query = connection.query('INSERT INTO candb.volunteer_attendance SET ?', values, function(err, result) {
+  if (err){ 
+    console.log('Attendance insert failed!');
+    res.json(500, { message: 'Something really went wrong!' });
+  }else{
+    res.json({"message": "Signedin!", "results": result}, 200);
+  }});
+
+};
+
 exports.class_participant_attendance_update = function(req, res){
 
   var class_id = req.params.id;
@@ -292,10 +322,12 @@ exports.class_participant_attendance_update = function(req, res){
   date.setMinutes(req_data.minute);
 
   if(req_data.type == "signin"){
-    type = 1;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, participant_id: participant_id, signin_time: date};
   }
   if(req_data.type == "signout"){
-    type = 0;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, participant_id: participant_id, signout_time: date};
   }
 
   // Prepare user data for DB insert 
@@ -313,9 +345,7 @@ exports.class_participant_attendance_update = function(req, res){
 
 };
 
-// Request JSON data: { "type": "signin/signout", "timestamp": "2015-07-26 15:39:06" }
-// curl -H "Content-Type: application/json" -X PATCH -d '{ "type": "signin", "timestamp": "2015-07-26 15:39:06" }' http://localhost:3000/api/class/1/attendance_worker/1
-exports.class_worker_attendance_update = function(req, res){
+exports.class_staff_attendance_update = function(req, res){
 
   var class_id = req.params.id;
   var worker_id = req.params.worker_id;
@@ -331,16 +361,18 @@ exports.class_worker_attendance_update = function(req, res){
   var type;
   
   if(req_data.type == "signin"){
-    type = 1;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, participant_id: participant_id, signin_time: date};
   }
   if(req_data.type == "signout"){
-    type = 0;
+    // Prepare user data for DB insert 
+    values = { class_id: class_id, participant_id: participant_id, signout_time: date};
   }
 
   // Prepare user data for DB insert 
   var values = { class_id: class_id, worker_id: worker_id, time: date, type: type };
   // Update MySQL
-  var query = connection.query('UPDATE candb.worker_attendance SET ? WHERE class_id = ? AND worker_id = ? AND type = ?', [values, class_id, worker_id, type], function(err, result) {
+  var query = connection.query('UPDATE candb.staff_attendance SET ? WHERE class_id = ? AND worker_id = ? AND type = ?', [values, class_id, worker_id, type], function(err, result) {
   if (err){ 
     console.log('Attendance insert failed!');
     res.json(500, { message: 'Something really went wrong!'});
